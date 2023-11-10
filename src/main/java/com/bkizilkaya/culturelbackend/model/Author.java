@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     @Column
     private String name;

@@ -6,29 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Entity
-@Table(name = "artworks")
+@Table(name = "zip_codes")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Artwork {
+public class ZipCode {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     @Column
-    private String title;
+    private String name;
     @Column
-    private String content;
-    @Column
-    private LocalDateTime createDate;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork")
-    private List<Image> images;
-    @Column
-    private Long authorId;
-
+    private String value;
 }

@@ -1,21 +1,22 @@
 package com.bkizilkaya.culturelbackend.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.bkizilkaya.culturelbackend.model.Image;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ArtworkResponseDTO {
     private String title;
     private String content;
-    private Date createDate;
-    private Double coordinateX;
-    private Double coordinateY;
+    private LocalDateTime createDate;
     private Long authorId;
+    private Integer zipCode;
+    private List<Image> images;
 }
