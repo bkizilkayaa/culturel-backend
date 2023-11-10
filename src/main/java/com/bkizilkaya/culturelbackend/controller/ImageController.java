@@ -24,8 +24,8 @@ public class ImageController {
     }
 
     // display image
-    @GetMapping("/display")
-    public ResponseEntity<byte[]> displayImage(@RequestParam("id") long id) throws IOException, SQLException {
+    @GetMapping("/display/{id}")
+    public ResponseEntity<byte[]> displayImage(@PathVariable("id") Long id) throws IOException, SQLException {
         Image image = imageService.viewImageById(id);
         byte[] imageBytes = null;
         imageBytes = image.getImage().getBytes(1, (int) image.getImage().length());

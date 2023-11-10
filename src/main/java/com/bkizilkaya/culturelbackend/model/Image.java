@@ -17,10 +17,12 @@ import java.util.Date;
 @Setter
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Lob
     private Blob image;
+
     private Date date = new Date();
     @ManyToOne
     @JoinColumn(name = "artworkId")
