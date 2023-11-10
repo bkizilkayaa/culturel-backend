@@ -20,6 +20,9 @@ public class ArtworkService {
         this.artworkRepository = artworkRepository;
     }
     public ArtworkCreateDTO addArtwork(ArtworkCreateDTO artworkCreateDTO){
+        if(artworkCreateDTO.getParentId() != null){
+            getArtworkById(artworkCreateDTO.getParentId());
+        }
         Artwork artwork = GenericUtil.artworkMapper(artworkCreateDTO);
         artworkRepository.save(artwork);
         return GenericUtil.artworkMapperForCreate(artwork);

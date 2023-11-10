@@ -13,6 +13,7 @@ public class GenericUtil {
         artwork.setContent(artworkCreateDTO.getContent());
         artwork.setTitle(artworkCreateDTO.getTitle());
         artwork.setCreateDate(LocalDateTime.now());
+        artwork.setParentId(artworkCreateDTO.getParentId());
         artwork.setAuthorId(artworkCreateDTO.getAuthorId());
         artwork.setImages(artworkCreateDTO.getImages());
         return artwork;

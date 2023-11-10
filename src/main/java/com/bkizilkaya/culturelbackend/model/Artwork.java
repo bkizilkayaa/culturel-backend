@@ -24,6 +24,8 @@ public class Artwork {
     @Column
     private String content;
     @Column
+    private Long parentId;
+    @Column
     private LocalDateTime createDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork")

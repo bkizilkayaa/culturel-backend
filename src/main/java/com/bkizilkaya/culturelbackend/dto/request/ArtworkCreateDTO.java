@@ -20,4 +20,5 @@ public class ArtworkCreateDTO {
     private Long authorId;
     private Integer zipCode;
     private List<Image> images;
+    private Long parentId;
 }
