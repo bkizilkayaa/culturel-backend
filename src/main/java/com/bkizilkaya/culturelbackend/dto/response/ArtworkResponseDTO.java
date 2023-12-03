@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ArtworkResponseDTO {
+    private Long Id;
     private String title;
     private String content;
     private LocalDateTime createDate;

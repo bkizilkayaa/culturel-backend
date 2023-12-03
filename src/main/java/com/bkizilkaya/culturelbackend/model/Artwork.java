@@ -33,4 +33,5 @@ public class Artwork {
     @Column
     private Long authorId;
 
+
 }

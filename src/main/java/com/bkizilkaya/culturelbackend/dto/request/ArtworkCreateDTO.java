@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ArtworkCreateDTO {
+    private Long Id;
     private String title;
     private String content;
     private LocalDateTime createDate;
@@ -19,4 +20,6 @@ public class ArtworkCreateDTO {
     private Integer zipCode;
     private List<Image> images;
     private Long parentId;
+    private Long imageId; // Yeni eklenen alan
+
 }
