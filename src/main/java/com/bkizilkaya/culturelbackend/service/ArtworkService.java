@@ -58,7 +58,7 @@ public class ArtworkService {
         return GenericUtil.artworkMapperForResponse(artworkById);
     }
 
-    private Artwork getArtworkById(Long artworkId) {
+    protected Artwork getArtworkById(Long artworkId) {
         return artworkRepository.findById(artworkId)
                 .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));
     }

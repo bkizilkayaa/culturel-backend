@@ -33,14 +33,14 @@ public class ImageController {
     }
 
     // add image - post
-    @PostMapping("/add")
-    public Image createImage(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException {
+    @PostMapping("/add/{artworkId}")
+    public Image createImage(@PathVariable Long artworkId, @RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException {
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 
         Image image = new Image();
         image.setImage(blob);
-        return imageService.createImage(image);
+        return imageService.createImage(image, artworkId);
 
     }
 
