@@ -2,7 +2,6 @@ package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.model.Image;
 import com.bkizilkaya.culturelbackend.service.ImageService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -4,17 +4,12 @@ import com.bkizilkaya.culturelbackend.dto.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.exception.ArtworkNotFoundException;
 import com.bkizilkaya.culturelbackend.model.Artwork;
-import com.bkizilkaya.culturelbackend.model.Image;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
-import com.bkizilkaya.culturelbackend.repo.ImageRepository;
 import com.bkizilkaya.culturelbackend.utils.GenericUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -22,13 +17,13 @@ public class ArtworkService {
     private final ArtworkRepository artworkRepository;
 
 
-
     public ArtworkService(ArtworkRepository artworkRepository) {
         this.artworkRepository = artworkRepository;
     }
-    public ArtworkCreateDTO addArtwork(ArtworkCreateDTO artworkCreateDTO){
 
-        if(artworkCreateDTO.getParentId() != null){
+    public ArtworkCreateDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
+
+        if (artworkCreateDTO.getParentId() != null) {
             getArtworkById(artworkCreateDTO.getParentId());
         }
 
@@ -36,13 +31,14 @@ public class ArtworkService {
         artworkRepository.save(artwork);
         return GenericUtil.artworkMapperForCreate(artwork);
     }
-    public List<ArtworkResponseDTO> getAllArtworks(){
+
+    public List<ArtworkResponseDTO> getAllArtworks() {
         List<ArtworkResponseDTO> artworkResponses = new ArrayList<>();
         List<Artwork> allArtworks = artworkRepository.findAll();
-        for (Artwork artwork : allArtworks){
+        for (Artwork artwork : allArtworks) {
             artworkResponses.add(GenericUtil.artworkMapperForResponse(artwork));
         }
-       return artworkResponses;
+        return artworkResponses;
     }
 
     public ArtworkResponseDTO getArtworkGivenId(Long artworkId) {

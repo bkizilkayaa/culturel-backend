@@ -28,7 +28,7 @@ public class ArtworkController {
     }
 
     @PostMapping
-    public ResponseEntity<ArtworkResponseDTO> addProduct(@RequestBody ArtworkCreateDTO newArtwork) {
+    public ResponseEntity<ArtworkResponseDTO> addArtwork(@RequestBody ArtworkCreateDTO newArtwork) {
         ArtworkCreateDTO artworkCreateDTOResponseEntity = artworkService.addArtwork(newArtwork);
         ArtworkResponseDTO artworkResponseDTO = GenericUtil.artworkMapperForResponse(artworkCreateDTOResponseEntity);
         return new ResponseEntity<>(artworkResponseDTO, CREATED);
@@ -41,13 +41,13 @@ public class ArtworkController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArtworkResponseDTO> updateLecturer(@PathVariable Long id, @RequestBody ArtworkCreateDTO artworkCreateDTO) {
+    public ResponseEntity<ArtworkResponseDTO> updateArtwork(@PathVariable Long id, @RequestBody ArtworkCreateDTO artworkCreateDTO) {
         ArtworkResponseDTO artworkResponseDTO = artworkService.updateArtwork(id, artworkCreateDTO);
         return new ResponseEntity<>(artworkResponseDTO, OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> updateLecturer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteArtwork(@PathVariable Long id) {
         artworkService.deleteArtwork(id);
         return new ResponseEntity<>(OK);
     }
