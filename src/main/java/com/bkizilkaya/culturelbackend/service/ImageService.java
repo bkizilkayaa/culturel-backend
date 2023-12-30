@@ -37,4 +37,9 @@ public class ImageService {
         return imageRepository.findById(id)
                 .orElseThrow(() -> new ImageNotFoundException("image not found by id"));
     }
+
+    public List<Image> getImageListByArtworkId(Long artworkId) {
+        Artwork artwork = artworkService.getArtworkById(artworkId);
+        return artwork.getImages();
+    }
 }
