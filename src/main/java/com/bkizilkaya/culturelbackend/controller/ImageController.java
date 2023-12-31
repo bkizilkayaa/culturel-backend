@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.zip.DeflaterOutputStream;
 
 @RestController
 @CrossOrigin
@@ -58,14 +60,27 @@ public class ImageController {
         }
         return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(outputStream.toByteArray());
     }
+
     // add image - post
     @PostMapping("/add/{artworkId}")
     public Image createImage(@PathVariable Long artworkId, @RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException {
         byte[] bytes = file.getBytes();
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+
+        // Sıkıştırma işlemi ama bug var suan
+        //byte[] compressedBytes = compress(bytes);
+
+        Blob blob = new SerialBlob(bytes);
         Image image = new Image();
         image.setImage(blob);
         return imageService.createImage(image, artworkId);
+    }
+
+    private byte[] compress(byte[] input) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (DeflaterOutputStream dos = new DeflaterOutputStream(baos)) {
+            dos.write(input);
+        }
+        return baos.toByteArray();
     }
 
 }
