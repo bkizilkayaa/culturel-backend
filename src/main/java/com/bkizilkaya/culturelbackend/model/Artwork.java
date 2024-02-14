@@ -1,5 +1,6 @@
 package com.bkizilkaya.culturelbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,8 +31,13 @@ public class Artwork {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork")
     private List<Image> images;
+
     @Column
     private Long authorId;
 
+    @JsonManagedReference
+    public List<Image> getImages(){
+        return images;
+    }
 
 }

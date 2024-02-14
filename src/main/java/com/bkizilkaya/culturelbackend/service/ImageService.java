@@ -22,9 +22,7 @@ public class ImageService {
 
     public Image createImage(Image image, Long artworkId) {
         Artwork artwork = artworkService.getArtworkById(artworkId);
-        List<Image> imagesList = artwork.getImages();
-        imagesList.add(image);
-        artwork.setImages(imagesList);
+        artwork.getImages().add(image);
         image.setArtwork(artwork);
         return imageRepository.save(image);
     }
