@@ -29,7 +29,7 @@ public class Artwork {
     @Column
     private LocalDateTime createDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork", cascade = CascadeType.ALL)
     private List<Image> images;
 
     @Column
