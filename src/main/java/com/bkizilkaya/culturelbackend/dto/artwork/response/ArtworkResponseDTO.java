@@ -1,4 +1,4 @@
-package com.bkizilkaya.culturelbackend.dto.request;
+package com.bkizilkaya.culturelbackend.dto.artwork.response;
 
 import com.bkizilkaya.culturelbackend.model.Image;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ArtworkCreateDTO {
+public class ArtworkResponseDTO {
     private Long Id;
     private String title;
     private String content;
@@ -19,7 +19,4 @@ public class ArtworkCreateDTO {
     private Long authorId;
     private Integer zipCode;
     private List<Image> images;
-    private Long parentId;
-    private Long imageId; // Yeni eklenen alan
-
 }

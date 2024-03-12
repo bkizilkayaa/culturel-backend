@@ -1,4 +1,4 @@
-package com.bkizilkaya.culturelbackend.service;
+package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.exception.ImageNotFoundException;
 import com.bkizilkaya.culturelbackend.model.Artwork;
@@ -11,11 +11,11 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ImageService {
+public class ImageServiceImpl {
     private final ImageRepository imageRepository;
-    private final ArtworkService artworkService;
+    private final ArtworkServiceImpl artworkService;
 
-    public ImageService(ImageRepository imageRepository, ArtworkService artworkService) {
+    public ImageServiceImpl(ImageRepository imageRepository, ArtworkServiceImpl artworkService) {
         this.imageRepository = imageRepository;
         this.artworkService = artworkService;
     }

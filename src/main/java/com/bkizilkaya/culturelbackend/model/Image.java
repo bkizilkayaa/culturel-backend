@@ -1,28 +1,35 @@
 package com.bkizilkaya.culturelbackend.model;
 
+import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.sql.Blob;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "images")
-@RequiredArgsConstructor
+@Table(name = "IMAGES")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ID;
+
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "TYPE")
+    private String type;
+
+    private LocalDateTime date;
 
     @Lob
-    private Blob image;
-
-    private Date date = new Date();
+    @Column(name = "IMAGE_DATA", length = 65555)
+    private byte[] imageData;
 
     @ManyToOne
     @JoinColumn(name = "artworkId")

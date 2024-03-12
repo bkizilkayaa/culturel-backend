@@ -11,26 +11,29 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "artworks")
+@Table(name = "ARTWORKS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Artwork {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long ID;
+    @Column(name = "TITLE")
     private String title;
-    @Column
+    @Column(name = "CONTENT")
     private String content;
-    @Column
+    @Column(name = "PARENT_ID")
     private Long parentId;
-    @Column
+    @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork", cascade = CascadeType.ALL)
     private List<Image> images;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artworkImages", cascade = CascadeType.ALL)
+    private List<FileData> fileData;
 
     @Column
     private Long authorId;

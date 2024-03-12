@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "zip_codes")
+@Table(name = "ZIP_CODES")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ZipCode {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long ID;
     @Column
     private String name;
     @Column

@@ -1,7 +1,7 @@
 package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.model.Image;
-import com.bkizilkaya.culturelbackend.service.ImageService;
+import com.bkizilkaya.culturelbackend.service.concrete.ImageServiceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ import java.util.zip.DeflaterOutputStream;
 @CrossOrigin
 @RequestMapping("/images")
 public class ImageController {
-    private final ImageService imageService;
+    private final ImageServiceImpl imageService;
 
-    public ImageController(ImageService imageService) {
+    public ImageController(ImageServiceImpl imageService) {
         this.imageService = imageService;
     }
 
@@ -30,8 +30,9 @@ public class ImageController {
     @GetMapping("/display/{id}")
     public ResponseEntity<byte[]> displayImage(@PathVariable("id") Long id) throws IOException, SQLException {
         Image image = getImageById(id);
-        byte[] imageBytes = getImageBytes(image);
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        //byte[] imageBytes = getImageBytes(image);
+        //return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+        return null;
     }
 
     private Image getImageById(Long id) {
@@ -39,7 +40,8 @@ public class ImageController {
     }
 
     private static byte[] getImageBytes(Image image) throws SQLException {
-        return image.getImage().getBytes(1, (int) image.getImage().length());
+        //return image.getImage().getBytes(1, (int) image.getImage().length());
+        return new byte[0];
     }
 
     @GetMapping("/{artworkId}")
@@ -53,10 +55,10 @@ public class ImageController {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         for (int i = 0; i < imageList.size(); i++) {
-            byte[] imageBytes = getImageBytes(imageList.get(i));
+            //byte[] imageBytes = getImageBytes(imageList.get(i));
             String imageHeader = "Image-" + i + "\n";
             outputStream.write(imageHeader.getBytes());
-            outputStream.write(imageBytes);
+            //outputStream.write(imageBytes);
         }
         return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(outputStream.toByteArray());
     }
@@ -71,7 +73,7 @@ public class ImageController {
 
         Blob blob = new SerialBlob(bytes);
         Image image = new Image();
-        image.setImage(blob);
+        //image.setImage(blob);
         return imageService.createImage(image, artworkId);
     }
 

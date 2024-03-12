@@ -1,10 +1,11 @@
-package com.bkizilkaya.culturelbackend.service;
+package com.bkizilkaya.culturelbackend.service.concrete;
 
-import com.bkizilkaya.culturelbackend.dto.request.ArtworkCreateDTO;
-import com.bkizilkaya.culturelbackend.dto.response.ArtworkResponseDTO;
+import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
+import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.exception.ArtworkNotFoundException;
 import com.bkizilkaya.culturelbackend.model.Artwork;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
+import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
 import com.bkizilkaya.culturelbackend.utils.GenericUtil;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,11 @@ import java.util.List;
 
 
 @Service
-public class ArtworkService {
+public class ArtworkServiceImpl implements ArtworkService {
     private final ArtworkRepository artworkRepository;
 
 
-    public ArtworkService(ArtworkRepository artworkRepository) {
+    public ArtworkServiceImpl(ArtworkRepository artworkRepository) {
         this.artworkRepository = artworkRepository;
     }
 

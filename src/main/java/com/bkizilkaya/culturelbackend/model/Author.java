@@ -9,19 +9,19 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "authors")
+@Table(name = "AUTHORS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long ID;
+    @Column(name = "NAME")
     private String name;
-    @Column
+    @Column(name = "CREATE_DATE")
     private Date createDate;
-    @Column
+    @Column(name = "ROLE")
     private Integer role;
 }

@@ -1,8 +1,8 @@
 package com.bkizilkaya.culturelbackend.controller;
 
-import com.bkizilkaya.culturelbackend.dto.request.ArtworkCreateDTO;
-import com.bkizilkaya.culturelbackend.dto.response.ArtworkResponseDTO;
-import com.bkizilkaya.culturelbackend.service.ArtworkService;
+import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
+import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
+import com.bkizilkaya.culturelbackend.service.concrete.ArtworkServiceImpl;
 import com.bkizilkaya.culturelbackend.utils.GenericUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin
 @RequestMapping("/artworks")
 public class ArtworkController {
-    private final ArtworkService artworkService;
+    private final ArtworkServiceImpl artworkService;
 
-    public ArtworkController(ArtworkService artworkService) {
+    public ArtworkController(ArtworkServiceImpl artworkService) {
         this.artworkService = artworkService;
     }
 

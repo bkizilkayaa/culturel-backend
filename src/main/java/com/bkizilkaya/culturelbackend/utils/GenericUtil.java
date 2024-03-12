@@ -1,17 +1,16 @@
 package com.bkizilkaya.culturelbackend.utils;
 
-import com.bkizilkaya.culturelbackend.dto.request.ArtworkCreateDTO;
-import com.bkizilkaya.culturelbackend.dto.response.ArtworkResponseDTO;
+import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
+import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.model.Artwork;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class GenericUtil {
     public static Artwork artworkMapper(ArtworkCreateDTO artworkCreateDTO){
         Artwork artwork = new Artwork();
         artwork.setContent(artworkCreateDTO.getContent());
-        artwork.setId(artworkCreateDTO.getId());
+        artwork.setID(artworkCreateDTO.getId());
         artwork.setTitle(artworkCreateDTO.getTitle());
         artwork.setCreateDate(LocalDateTime.now());
         artwork.setParentId(artworkCreateDTO.getParentId());
@@ -22,7 +21,7 @@ public class GenericUtil {
     }
     public static ArtworkCreateDTO artworkMapperForCreate(Artwork artwork){
         return ArtworkCreateDTO.builder()
-                .Id(artwork.getId())
+                .Id(artwork.getID())
                 .createDate(LocalDateTime.now())
                 .authorId(artwork.getAuthorId())
                 .content(artwork.getContent())
@@ -33,7 +32,7 @@ public class GenericUtil {
     }
     public static ArtworkResponseDTO artworkMapperForResponse(Artwork artwork){
         return ArtworkResponseDTO.builder()
-                .Id(artwork.getId())
+                .Id(artwork.getID())
                 .authorId(artwork.getAuthorId())
                 .images(artwork.getImages())
                 .content(artwork.getContent())
