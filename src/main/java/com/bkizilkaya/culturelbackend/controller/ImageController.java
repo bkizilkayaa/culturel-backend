@@ -24,7 +24,7 @@ import java.util.zip.DeflaterOutputStream;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/images")
+@RequestMapping("/depreceated")
 public class ImageController {
     private final ImageServiceImpl imageService;
 

@@ -1,7 +1,7 @@
 package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.model.FileData;
-import com.bkizilkaya.culturelbackend.service.concrete.StorageServiceImpl;
+import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,30 +17,30 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/image")
-public class StorageController {
-    private final StorageServiceImpl storageService;
+@RequestMapping("/images")
+public class FileController {
+    private final StorageService storageService;
 
-    public StorageController(StorageServiceImpl storageService) {
+    public FileController(StorageService storageService) {
         this.storageService = storageService;
     }
 
-    @GetMapping("/getall")
+    @GetMapping()
     public ResponseEntity<List<FileData>> getAllFileDatas() {
-        return new ResponseEntity<>(storageService.getAllFileData(), HttpStatus.OK);
+        return new ResponseEntity<>(storageService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImageToFileSystem(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = storageService.uploadImageToFileSystem(file);
+        String uploadImage = storageService.saveFile(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(uploadImage);
     }
 
-    @GetMapping("/fileSystem/{fileName}")
+    @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
-        byte[] imageData = storageService.downloadImageFromFileSystem(fileName);
+        byte[] imageData = storageService.downloadFileByteCode(fileName);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);

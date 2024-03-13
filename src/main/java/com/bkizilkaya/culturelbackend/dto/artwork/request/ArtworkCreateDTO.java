@@ -24,6 +24,6 @@ public class ArtworkCreateDTO {
     private Integer zipCode;
     private List<Image> images;
     private Long parentId;
-    private Long imageId; // Yeni eklenen alan
+    private Long imageId;
 
 }
