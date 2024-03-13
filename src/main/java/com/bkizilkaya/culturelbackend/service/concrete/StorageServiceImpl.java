@@ -67,7 +67,8 @@ public class StorageServiceImpl {
         String filePath = FOLDER_PATH + fileData.get().getName();
         return Files.readAllBytes(new File(filePath).toPath());
     }
-    public List<FileData> getAllFileData(){
+
+    public List<FileData> getAllFileData() {
         return fileDataRepository.findAll();
     }
 }

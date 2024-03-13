@@ -7,7 +7,7 @@ import com.bkizilkaya.culturelbackend.model.Artwork;
 import java.time.LocalDateTime;
 
 public class GenericUtil {
-    public static Artwork artworkMapper(ArtworkCreateDTO artworkCreateDTO){
+    public static Artwork artworkMapper(ArtworkCreateDTO artworkCreateDTO) {
         Artwork artwork = new Artwork();
         artwork.setContent(artworkCreateDTO.getContent());
         artwork.setID(artworkCreateDTO.getId());
@@ -19,7 +19,8 @@ public class GenericUtil {
 
         return artwork;
     }
-    public static ArtworkCreateDTO artworkMapperForCreate(Artwork artwork){
+
+    public static ArtworkCreateDTO artworkMapperForCreate(Artwork artwork) {
         return ArtworkCreateDTO.builder()
                 .Id(artwork.getID())
                 .createDate(LocalDateTime.now())
@@ -30,7 +31,8 @@ public class GenericUtil {
                 .images(artwork.getImages())
                 .build();
     }
-    public static ArtworkResponseDTO artworkMapperForResponse(Artwork artwork){
+
+    public static ArtworkResponseDTO artworkMapperForResponse(Artwork artwork) {
         return ArtworkResponseDTO.builder()
                 .Id(artwork.getID())
                 .authorId(artwork.getAuthorId())
@@ -40,7 +42,8 @@ public class GenericUtil {
                 .title(artwork.getTitle())
                 .build();
     }
-    public static ArtworkResponseDTO artworkMapperForResponse(ArtworkCreateDTO artworkCreateDTO){
+
+    public static ArtworkResponseDTO artworkMapperForResponse(ArtworkCreateDTO artworkCreateDTO) {
         return ArtworkResponseDTO.builder()
                 .Id(artworkCreateDTO.getId())
                 .createDate(artworkCreateDTO.getCreateDate())
