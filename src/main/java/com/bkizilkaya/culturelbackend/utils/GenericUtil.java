@@ -15,7 +15,7 @@ public class GenericUtil {
         artwork.setCreateDate(LocalDateTime.now());
         artwork.setParentId(artworkCreateDTO.getParentId());
         artwork.setAuthorId(artworkCreateDTO.getAuthorId());
-        artwork.setImages(artworkCreateDTO.getImages());
+        artwork.setFileData(artworkCreateDTO.getFileDataList());
 
         return artwork;
     }
@@ -28,7 +28,7 @@ public class GenericUtil {
                 .content(artwork.getContent())
 
                 .title(artwork.getTitle())
-                .images(artwork.getImages())
+                .fileDataList(artwork.getFiles())
                 .build();
     }
 
@@ -36,7 +36,7 @@ public class GenericUtil {
         return ArtworkResponseDTO.builder()
                 .Id(artwork.getID())
                 .authorId(artwork.getAuthorId())
-                .images(artwork.getImages())
+                .fileDataList(artwork.getFiles())
                 .content(artwork.getContent())
                 .createDate(LocalDateTime.now())
                 .title(artwork.getTitle())
@@ -49,7 +49,7 @@ public class GenericUtil {
                 .createDate(artworkCreateDTO.getCreateDate())
                 .authorId(artworkCreateDTO.getAuthorId())
                 .content(artworkCreateDTO.getContent())
-                .images(artworkCreateDTO.getImages())
+                .fileDataList(artworkCreateDTO.getFileDataList())
                 .title(artworkCreateDTO.getTitle())
                 .build();
     }

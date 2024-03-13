@@ -30,11 +30,11 @@ public class FileDataServiceImpl implements StorageService {
     }
 
     @Override
-    public String saveFile(MultipartFile multiPartFile) throws IOException {
+    public Long saveFile(MultipartFile multiPartFile) throws IOException {
         String filePath = FOLDER_PATH + multiPartFile.getOriginalFilename();
-        saveFileDataToDatabase(multiPartFile);
+        Long fileId = saveFileDataToDatabase(multiPartFile);
         multiPartFile.transferTo(new File(filePath));
-        return "File uploaded successfully : " + multiPartFile.getName();
+        return fileId;
     }
 
     @Override
@@ -44,16 +44,22 @@ public class FileDataServiceImpl implements StorageService {
         return Files.readAllBytes(new File(filePath).toPath());
     }
 
-    private void saveFileDataToDatabase(MultipartFile multiPartFile) {
-        fileDataRepository.save(FileData.builder()
+    private Long saveFileDataToDatabase(MultipartFile multiPartFile) {
+        FileData save = fileDataRepository.save(FileData.builder()
                 .name(multiPartFile.getOriginalFilename())
                 .type(multiPartFile.getContentType()).build());
+        return save.getID();
     }
 
     @Override
     public FileData findByName(String fileName) {
         return fileDataRepository.findByName(fileName)
                 .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with name : ", fileName));
+    }
+
+    public FileData findById(Long fileId) {
+        return fileDataRepository.findById(fileId)
+                .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with id : "));
     }
 
 }

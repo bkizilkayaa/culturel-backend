@@ -2,6 +2,7 @@ package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
+import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.service.concrete.ArtworkServiceImpl;
 import com.bkizilkaya.culturelbackend.utils.GenericUtil;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,14 +28,28 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/artworks")
 public class ArtworkController {
     private final ArtworkServiceImpl artworkService;
+    private final FileController fileController;
 
-    public ArtworkController(ArtworkServiceImpl artworkService) {
+    public ArtworkController(ArtworkServiceImpl artworkService, FileController fileController) {
         this.artworkService = artworkService;
+        this.fileController = fileController;
     }
 
     @GetMapping
     public ResponseEntity<List<ArtworkResponseDTO>> getAllArtworks() {
         return new ResponseEntity<>(artworkService.getAllArtworks(), OK);
+    }
+
+    @GetMapping("/{artworkId}/images")
+    public ResponseEntity<List<FileData>> getArtworkImage(@PathVariable Long artworkId) {
+        return new ResponseEntity<>(artworkService.getArtworkGivenId(artworkId).getFileDataList(), OK);
+    }
+
+    @PostMapping("/{artworkId}/images")
+    public ResponseEntity<String> addImageToArtwork(@PathVariable Long artworkId, @RequestParam("image") MultipartFile file) {
+        Long artworkImagesArtworkId = artworkService.addImageToArtwork(artworkId, file);
+        String returnMessage = artworkImagesArtworkId + " idli artworke resim eklendi";
+        return new ResponseEntity<>(returnMessage, OK);
     }
 
     @PostMapping

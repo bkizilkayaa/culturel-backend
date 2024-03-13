@@ -37,9 +37,6 @@ public class Artwork {
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artwork", cascade = CascadeType.ALL)
-    private List<Image> images;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artworkImages", cascade = CascadeType.ALL)
     private List<FileData> fileData;
 
@@ -47,8 +44,8 @@ public class Artwork {
     private Long authorId;
 
     @JsonManagedReference
-    public List<Image> getImages() {
-        return images;
+    public List<FileData> getFiles() {
+        return fileData;
     }
 
 }

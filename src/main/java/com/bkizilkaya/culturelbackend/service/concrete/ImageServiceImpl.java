@@ -19,7 +19,7 @@ public class ImageServiceImpl {
         this.imageRepository = imageRepository;
         this.artworkService = artworkService;
     }
-
+/*
     public Image createImage(Image image, Long artworkId) {
         Artwork artwork = artworkService.getArtworkById(artworkId);
         artwork.getImages().add(image);
@@ -40,4 +40,5 @@ public class ImageServiceImpl {
         Artwork artwork = artworkService.getArtworkById(artworkId);
         return artwork.getImages();
     }
+*/
 }

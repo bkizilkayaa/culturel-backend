@@ -33,6 +33,8 @@ public class ImageController {
     }
 
     // display image
+    /*
+
     @GetMapping("/display/{id}")
     public ResponseEntity<byte[]> displayImage(@PathVariable("id") Long id) throws IOException, SQLException {
         Image image = getImageById(id);
@@ -90,5 +92,5 @@ public class ImageController {
         }
         return baos.toByteArray();
     }
-
+*/
 }
