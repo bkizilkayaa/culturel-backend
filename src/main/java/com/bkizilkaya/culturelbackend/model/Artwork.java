@@ -28,12 +28,16 @@ public class Artwork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+
     @Column(name = "TITLE")
     private String title;
+
     @Column(name = "CONTENT")
     private String content;
+
     @Column(name = "PARENT_ID")
     private Long parentId;
+
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 

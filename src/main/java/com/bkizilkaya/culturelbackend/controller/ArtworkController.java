@@ -28,11 +28,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/artworks")
 public class ArtworkController {
     private final ArtworkServiceImpl artworkService;
-    private final FileController fileController;
-
-    public ArtworkController(ArtworkServiceImpl artworkService, FileController fileController) {
+    public ArtworkController(ArtworkServiceImpl artworkService) {
         this.artworkService = artworkService;
-        this.fileController = fileController;
     }
 
     @GetMapping
@@ -42,7 +39,8 @@ public class ArtworkController {
 
     @GetMapping("/{artworkId}/images")
     public ResponseEntity<List<FileData>> getArtworkImage(@PathVariable Long artworkId) {
-        return new ResponseEntity<>(artworkService.getArtworkGivenId(artworkId).getFileDataList(), OK);
+        List<FileData> fileDataList = artworkService.getArtworkGivenId(artworkId).getFileDataList();
+        return new ResponseEntity<>(fileDataList, OK);
     }
 
     @PostMapping("/{artworkId}/images")

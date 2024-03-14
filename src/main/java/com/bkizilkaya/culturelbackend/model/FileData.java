@@ -1,5 +1,6 @@
 package com.bkizilkaya.culturelbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class FileData {
     private String type;
 
     @ManyToOne
+    @JsonIgnore
     @JoinTable(name = "artwork_images",
             joinColumns = @JoinColumn(name = "image_id"),
             inverseJoinColumns = @JoinColumn(name = "artwork_id"))
