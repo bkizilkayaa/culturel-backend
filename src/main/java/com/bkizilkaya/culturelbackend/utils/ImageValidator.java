@@ -1,7 +1,5 @@
 package com.bkizilkaya.culturelbackend.utils;
 
-import com.bkizilkaya.culturelbackend.model.FileData;
-import com.bkizilkaya.culturelbackend.service.concrete.FileDataServiceImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,11 +9,13 @@ import java.io.ByteArrayInputStream;
 
 @Component
 public class ImageValidator {
+    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; //10MB
     private static final Integer NO_HEIGHT = 0;
     private static final Integer NO_WIDTH = 0;
 
     public boolean isImage(MultipartFile file) {
         try {
+            if (!checkFileSize(file)) return false;
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
             return checkDimensionsOfImage(image);
         } catch (Exception e) {
@@ -23,8 +23,16 @@ public class ImageValidator {
         }
     }
 
-    private static boolean checkDimensionsOfImage(BufferedImage image) {
+    private boolean checkDimensionsOfImage(BufferedImage image) {
         return image.getHeight() > NO_HEIGHT && image.getWidth() > NO_WIDTH;
     }
 
+    public boolean isFileSizeValid(MultipartFile file) {
+        if (!checkFileSize(file)) return false;
+        return file.getSize() <= MAX_FILE_SIZE;
+    }
+
+    private boolean checkFileSize(MultipartFile file) {
+        return file != null && !file.isEmpty();
+    }
 }

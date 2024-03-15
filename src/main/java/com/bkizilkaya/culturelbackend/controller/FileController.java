@@ -1,7 +1,6 @@
 package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
-import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,8 +28,8 @@ public class FileController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<FileDataResponseDTO>> getAllFileDatas() {
-        return new ResponseEntity<>(storageService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<FileDataResponseDTO>> getAllFileData() {
+        return ResponseEntity.status(HttpStatus.OK).body(storageService.getAll());
     }
 
     @PostMapping("/upload")
@@ -45,6 +44,5 @@ public class FileController {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
-
     }
 }

@@ -42,7 +42,7 @@ public class FileDataServiceImpl implements StorageService {
 
     @Override
     public Long saveFile(MultipartFile multiPartFile) throws IOException {
-        if (!imageValidator.isImage(multiPartFile)) {
+        if (!imageValidator.isImage(multiPartFile) && !imageValidator.isFileSizeValid(multiPartFile)) {
             throw new ValidationException("not an image");
         }
         String fileName = pathService.generateFileName(multiPartFile);
