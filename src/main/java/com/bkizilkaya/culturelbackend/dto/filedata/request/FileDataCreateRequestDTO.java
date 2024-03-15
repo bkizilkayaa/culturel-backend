@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -12,8 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class FileDataCreateRequestDTO {
-    private Long ID;
-    private String name;
-    private String type;
-
+    private MultipartFile multipartFile;
 }

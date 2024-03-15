@@ -28,6 +28,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         this.fileDataService = fileDataService;
     }
 
+    @Override
     public ArtworkCreateDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
 
         if (artworkCreateDTO.getParentId() != null) {
@@ -39,6 +40,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         return GenericUtil.artworkMapperForCreate(artwork);
     }
 
+    @Override
     public List<ArtworkResponseDTO> getAllArtworks() {
         List<ArtworkResponseDTO> artworkResponses = new ArrayList<>();
         List<Artwork> allArtworks = artworkRepository.findAll();
@@ -48,11 +50,13 @@ public class ArtworkServiceImpl implements ArtworkService {
         return artworkResponses;
     }
 
+    @Override
     public ArtworkResponseDTO getArtworkGivenId(Long artworkId) {
         Artwork artworkById = getArtworkById(artworkId);
         return GenericUtil.artworkMapperForResponse(artworkById);
     }
 
+    @Override
     public ArtworkResponseDTO updateArtwork(Long id, ArtworkCreateDTO artworkCreateDTO) {
         Artwork artworkById = getArtworkById(id);
         artworkById.setTitle(artworkCreateDTO.getTitle());
@@ -61,11 +65,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         return GenericUtil.artworkMapperForResponse(artworkById);
     }
 
-    protected Artwork getArtworkById(Long artworkId) {
-        return artworkRepository.findById(artworkId)
-                .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));
-    }
-
+    @Override
     public void deleteArtwork(Long id) {
         artworkRepository.deleteById(id);
     }
@@ -84,6 +84,11 @@ public class ArtworkServiceImpl implements ArtworkService {
             throw new RuntimeException(e);
         }
         return artworkId;
+    }
+
+    protected Artwork getArtworkById(Long artworkId) {
+        return artworkRepository.findById(artworkId)
+                .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));
     }
 }
 

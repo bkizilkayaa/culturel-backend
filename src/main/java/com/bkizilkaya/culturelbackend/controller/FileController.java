@@ -1,5 +1,6 @@
 package com.bkizilkaya.culturelbackend.controller;
 
+import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,14 @@ public class FileController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<FileData>> getAllFileDatas() {
+    public ResponseEntity<List<FileDataResponseDTO>> getAllFileDatas() {
         return new ResponseEntity<>(storageService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadImageToFileSystem(@RequestParam("image") MultipartFile file) throws IOException {
-        Long imageId = storageService.saveFile(file);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(imageId + "saved successfully");
+    public ResponseEntity<String> uploadImageToFileSystem(@RequestParam("image") MultipartFile multipartFile) throws IOException {
+        Long imageId = storageService.saveFile(multipartFile);
+        return ResponseEntity.status(HttpStatus.OK).body(imageId + " idli resim eklendi");
     }
 
     @GetMapping("/{fileName}")
