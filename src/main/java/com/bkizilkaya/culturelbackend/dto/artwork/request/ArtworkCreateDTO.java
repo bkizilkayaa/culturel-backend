@@ -24,6 +24,4 @@ public class ArtworkCreateDTO {
     private Integer zipCode;
     private List<FileData> fileDataList;
     private Long parentId;
-    private Long imageId;
-
 }

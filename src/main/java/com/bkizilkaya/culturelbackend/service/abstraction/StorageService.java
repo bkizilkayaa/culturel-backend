@@ -15,4 +15,6 @@ public interface StorageService {
     public FileData findByName(String fileName);
 
     public byte[] downloadFileByteCode(String fileName) throws IOException;
+
+    public void deleteFile(Long fileId);
 }

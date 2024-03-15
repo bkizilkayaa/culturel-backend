@@ -63,15 +63,15 @@ public class ArtworkController {
         return new ResponseEntity<>(artworkFromDb, OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ArtworkResponseDTO> updateArtwork(@PathVariable Long id, @RequestBody ArtworkCreateDTO artworkCreateDTO) {
-        ArtworkResponseDTO artworkResponseDTO = artworkService.updateArtwork(id, artworkCreateDTO);
+    @PutMapping("/{artworkId}")
+    public ResponseEntity<ArtworkResponseDTO> updateArtwork(@PathVariable Long artworkId, @RequestBody ArtworkCreateDTO artworkCreateDTO) {
+        ArtworkResponseDTO artworkResponseDTO = artworkService.updateArtwork(artworkId, artworkCreateDTO);
         return new ResponseEntity<>(artworkResponseDTO, OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArtwork(@PathVariable Long id) {
-        artworkService.deleteArtwork(id);
+    @DeleteMapping("/{artworkId}")
+    public ResponseEntity<Void> deleteArtwork(@PathVariable Long artworkId) {
+        artworkService.deleteArtwork(artworkId);
         return new ResponseEntity<>(OK);
     }
 

@@ -1,6 +1,7 @@
 package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
+import com.bkizilkaya.culturelbackend.exception.ImageNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import com.bkizilkaya.culturelbackend.model.FileData;
@@ -83,6 +84,16 @@ public class FileDataServiceImpl implements StorageService {
     protected FileData findById(Long fileId) {
         return fileDataRepository.findById(fileId)
                 .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with id : "));
+    }
+
+    @Override
+    public void deleteFile(Long fileId) {
+        FileData fileDataFromDb = findById(fileId);
+        if (fileDataFromDb != null) {
+            fileDataRepository.deleteById(fileId);
+        } else {
+            throw new ImageNotFoundException("file not found");
+        }
     }
 
 }

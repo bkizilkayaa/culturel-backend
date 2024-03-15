@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,12 +42,8 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     @Override
     public List<ArtworkResponseDTO> getAllArtworks() {
-        List<ArtworkResponseDTO> artworkResponses = new ArrayList<>();
         List<Artwork> allArtworks = artworkRepository.findAll();
-        for (Artwork artwork : allArtworks) {
-            artworkResponses.add(GenericUtil.artworkMapperForResponse(artwork));
-        }
-        return artworkResponses;
+        return allArtworks.stream().map(GenericUtil::artworkMapperForResponse).collect(Collectors.toList());
     }
 
     @Override
@@ -91,4 +87,3 @@ public class ArtworkServiceImpl implements ArtworkService {
                 .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));
     }
 }
-
