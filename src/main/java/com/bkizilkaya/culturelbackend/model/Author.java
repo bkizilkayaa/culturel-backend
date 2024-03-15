@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "AUTHORS")
@@ -26,7 +26,7 @@ public class Author {
     @Column(name = "NAME")
     private String name;
     @Column(name = "CREATE_DATE")
-    private Date createDate;
+    private LocalDateTime createDate;
     @Column(name = "ROLE")
     private Integer role;
 }

@@ -8,7 +8,6 @@ import com.bkizilkaya.culturelbackend.repo.FileDataRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import com.bkizilkaya.culturelbackend.utils.FileDataMapper;
 import com.bkizilkaya.culturelbackend.utils.ImageValidator;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,6 @@ public class FileDataServiceImpl implements StorageService {
     private String FOLDER_PATH;
     private final FileDataRepository fileDataRepository;
     private final ImageValidator imageValidator;
-
     private final PathServiceImpl pathService;
 
     public FileDataServiceImpl(FileDataRepository fileDataRepository, ImageValidator imageValidator, PathServiceImpl pathService) {
@@ -42,8 +41,8 @@ public class FileDataServiceImpl implements StorageService {
 
     @Override
     public Long saveFile(MultipartFile multiPartFile) throws IOException {
-        if (!imageValidator.isImage(multiPartFile) && !imageValidator.isFileSizeValid(multiPartFile)) {
-            throw new ValidationException("not an image");
+        if (!imageValidator.isImage(multiPartFile) || !imageValidator.isFileSizeValid(multiPartFile)) {
+            throw new ValidationException("not a valid image");
         }
         String fileName = pathService.generateFileName(multiPartFile);
         String filePath = FOLDER_PATH + fileName;
@@ -66,10 +65,11 @@ public class FileDataServiceImpl implements StorageService {
     private Long saveFileDataToDatabase(MultipartFile multiPartFile, String fileName) {
         String fileExtension = pathService.getFileExtension(multiPartFile.getOriginalFilename());
         if (fileExtension != null) {
-            FileData save = fileDataRepository.save(FileData.builder()
+            FileData fileData = fileDataRepository.save(FileData.builder()
                     .name(fileName)
+                    .createDate(LocalDateTime.now())
                     .type(multiPartFile.getContentType()).build());
-            return save.getID();
+            return fileData.getID();
         }
         return null;
     }

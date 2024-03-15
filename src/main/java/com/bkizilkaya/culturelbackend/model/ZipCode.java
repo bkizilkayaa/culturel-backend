@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class ZipCode {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     @Column
     private String name;

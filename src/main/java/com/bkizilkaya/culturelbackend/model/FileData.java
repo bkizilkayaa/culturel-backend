@@ -16,6 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "FILE_DATA")
 @Getter
@@ -31,8 +33,12 @@ public class FileData {
 
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "TYPE")
     private String type;
+
+    @Column(name = "CREATE_DATE")
+    private LocalDateTime createDate;
 
     @ManyToOne
     @JsonIgnore
