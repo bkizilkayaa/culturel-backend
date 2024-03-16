@@ -7,7 +7,7 @@ import com.bkizilkaya.culturelbackend.model.Artwork;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
-import com.bkizilkaya.culturelbackend.utils.GenericUtil;
+import com.bkizilkaya.culturelbackend.utils.ArtworkMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,21 +35,21 @@ public class ArtworkServiceImpl implements ArtworkService {
             getArtworkById(artworkCreateDTO.getParentId());
         }
 
-        Artwork artwork = GenericUtil.artworkMapper(artworkCreateDTO);
+        Artwork artwork = ArtworkMapper.artworkMapper(artworkCreateDTO);
         artworkRepository.save(artwork);
-        return GenericUtil.artworkMapperForCreate(artwork);
+        return ArtworkMapper.artworkMapperForCreate(artwork);
     }
 
     @Override
     public List<ArtworkResponseDTO> getAllArtworks() {
         List<Artwork> allArtworks = artworkRepository.findAll();
-        return allArtworks.stream().map(GenericUtil::artworkMapperForResponse).collect(Collectors.toList());
+        return allArtworks.stream().map(ArtworkMapper::artworkMapperForResponse).collect(Collectors.toList());
     }
 
     @Override
     public ArtworkResponseDTO getArtworkGivenId(Long artworkId) {
         Artwork artworkById = getArtworkById(artworkId);
-        return GenericUtil.artworkMapperForResponse(artworkById);
+        return ArtworkMapper.artworkMapperForResponse(artworkById);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         artworkById.setTitle(artworkCreateDTO.getTitle());
         artworkById.setContent(artworkCreateDTO.getContent());
         artworkById.setFileData(artworkCreateDTO.getFileDataList());
-        return GenericUtil.artworkMapperForResponse(artworkById);
+        return ArtworkMapper.artworkMapperForResponse(artworkById);
     }
 
     @Override

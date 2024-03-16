@@ -4,7 +4,7 @@ import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.service.concrete.ArtworkServiceImpl;
-import com.bkizilkaya.culturelbackend.utils.GenericUtil;
+import com.bkizilkaya.culturelbackend.utils.ArtworkMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,7 +54,7 @@ public class ArtworkController {
     @PostMapping
     public ResponseEntity<ArtworkResponseDTO> addArtwork(@RequestBody ArtworkCreateDTO newArtwork) {
         ArtworkCreateDTO artworkCreateDTOResponseEntity = artworkService.addArtwork(newArtwork);
-        ArtworkResponseDTO artworkResponseDTO = GenericUtil.artworkMapperForResponse(artworkCreateDTOResponseEntity);
+        ArtworkResponseDTO artworkResponseDTO = ArtworkMapper.artworkMapperForResponse(artworkCreateDTOResponseEntity);
         return new ResponseEntity<>(artworkResponseDTO, CREATED);
     }
 

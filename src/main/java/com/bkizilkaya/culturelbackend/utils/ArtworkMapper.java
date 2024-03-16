@@ -7,7 +7,7 @@ import com.bkizilkaya.culturelbackend.model.Artwork;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-public class GenericUtil {
+public class ArtworkMapper {
     public static Artwork artworkMapper(ArtworkCreateDTO artworkCreateDTO) {
         Artwork artwork = new Artwork();
         artwork.setContent(artworkCreateDTO.getContent());
