@@ -42,8 +42,11 @@ public class FileDataServiceImpl implements StorageService {
 
     @Override
     public Long saveFile(MultipartFile multiPartFile) throws IOException {
-        if (!imageValidator.isImage(multiPartFile) || !imageValidator.isFileSizeValid(multiPartFile)) {
+        if (!imageValidator.isImage(multiPartFile)) {
             throw new ValidationException("not a valid image");
+        }
+        if (!imageValidator.isFileSizeValid(multiPartFile)) {
+            throw new ValidationException("Maximum file size reached : 10MB+");
         }
         String fileName = pathService.generateFileName(multiPartFile);
         String filePath = FOLDER_PATH + fileName;
