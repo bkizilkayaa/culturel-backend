@@ -29,15 +29,14 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
-    public ArtworkCreateDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
-
+    public ArtworkResponseDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
         if (artworkCreateDTO.getParentId() != null) {
             getArtworkById(artworkCreateDTO.getParentId());
         }
 
         Artwork artwork = ArtworkMapper.artworkMapper(artworkCreateDTO);
         artworkRepository.save(artwork);
-        return ArtworkMapper.artworkMapperForCreate(artwork);
+        return ArtworkMapper.artworkMapperForResponse(artwork);
     }
 
     @Override
@@ -54,15 +53,16 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     @Override
     public ArtworkResponseDTO updateArtwork(Long id, ArtworkCreateDTO artworkCreateDTO) {
-        Artwork artworkById = getArtworkById(id);
-        artworkById.setTitle(artworkCreateDTO.getTitle());
-        artworkById.setContent(artworkCreateDTO.getContent());
-        artworkById.setFileData(artworkCreateDTO.getFileDataList());
-        return ArtworkMapper.artworkMapperForResponse(artworkById);
+        Artwork artworkFromDb = getArtworkById(id);
+        artworkFromDb.setTitle(artworkCreateDTO.getTitle());
+        artworkFromDb.setContent(artworkCreateDTO.getContent());
+        artworkFromDb.setFileData(artworkCreateDTO.getFileDataList());
+        return ArtworkMapper.artworkMapperForResponse(artworkFromDb);
     }
 
     @Override
     public void deleteArtwork(Long id) {
+        Artwork artworkFromDb = getArtworkById(id);
         artworkRepository.deleteById(id);
     }
 
@@ -77,7 +77,7 @@ public class ArtworkServiceImpl implements ArtworkService {
             fileData.setArtworkImages(artwork);
             artwork.getFiles().add(fileData);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         return artworkId;
     }

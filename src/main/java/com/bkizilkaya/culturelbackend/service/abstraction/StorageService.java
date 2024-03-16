@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.util.List;
 
 public interface StorageService {
-    public List<FileDataResponseDTO> getAll();
+    List<FileDataResponseDTO> getAll();
 
-    public Long saveFile(MultipartFile multiPartFile) throws IOException;
+    Long saveFile(MultipartFile multiPartFile) throws IOException;
 
-    public FileData findByName(String fileName);
+    FileData findByName(String fileName);
 
-    public byte[] downloadFileByteCode(String fileName) throws IOException;
+    byte[] downloadFileByteCode(String fileName) throws IOException;
 
-    public void deleteFile(Long fileId);
+    void deleteFile(Long fileId);
 }

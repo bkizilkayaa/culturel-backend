@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface PathService {
 
-    public String generateFileName(MultipartFile file);
+    String generateFileName(MultipartFile file);
 
-    public String getFileExtension(String originalFilename);
+    String getFileExtension(String originalFilename);
 
 }
