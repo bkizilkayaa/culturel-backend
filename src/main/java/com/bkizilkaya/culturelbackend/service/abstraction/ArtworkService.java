@@ -16,4 +16,6 @@ public interface ArtworkService {
 
     public void deleteArtwork(Long id);
 
+    public void removeArtworkImageFromArtwork(Long artworkId, Long imageId);
+
 }

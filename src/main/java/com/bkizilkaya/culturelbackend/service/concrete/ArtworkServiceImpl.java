@@ -82,6 +82,15 @@ public class ArtworkServiceImpl implements ArtworkService {
         return artworkId;
     }
 
+    @Override
+    @Transactional
+    public void removeArtworkImageFromArtwork(Long artworkId, Long imageId) {
+        Artwork artwork = getArtworkById(artworkId);
+        FileData fileDataFromDb = fileDataService.findById(imageId);
+        artwork.getFiles().remove(fileDataFromDb);
+        fileDataFromDb.setArtworkImages(null);
+    }
+
     protected Artwork getArtworkById(Long artworkId) {
         return artworkRepository.findById(artworkId)
                 .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));

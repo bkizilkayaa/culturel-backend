@@ -28,6 +28,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/artworks")
 public class ArtworkController {
     private final ArtworkServiceImpl artworkService;
+
     public ArtworkController(ArtworkServiceImpl artworkService) {
         this.artworkService = artworkService;
     }
@@ -73,6 +74,12 @@ public class ArtworkController {
     public ResponseEntity<Void> deleteArtwork(@PathVariable Long artworkId) {
         artworkService.deleteArtwork(artworkId);
         return new ResponseEntity<>(OK);
+    }
+
+    @DeleteMapping("/{artworkId}/images/{imageId}")
+    public ResponseEntity<String> removeArtworkImageFromArtwork(@PathVariable Long artworkId, @PathVariable Long imageId) {
+        artworkService.removeArtworkImageFromArtwork(artworkId, imageId);
+        return ResponseEntity.status(OK).body("Artwork image removed from artwork successfully");
     }
 
 }
