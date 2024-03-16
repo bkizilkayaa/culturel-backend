@@ -2,7 +2,7 @@ package com.bkizilkaya.culturelbackend.controller;
 
 import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
-import com.bkizilkaya.culturelbackend.model.FileData;
+import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.service.concrete.ArtworkServiceImpl;
 import com.bkizilkaya.culturelbackend.utils.GenericUtil;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +39,8 @@ public class ArtworkController {
     }
 
     @GetMapping("/{artworkId}/images")
-    public ResponseEntity<List<FileData>> getArtworkImage(@PathVariable Long artworkId) {
-        List<FileData> fileDataList = artworkService.getArtworkGivenId(artworkId).getFileDataList();
+    public ResponseEntity<List<FileDataResponseDTO>> getArtworkImage(@PathVariable Long artworkId) {
+        List<FileDataResponseDTO> fileDataList = artworkService.getArtworkGivenId(artworkId).getFileDataList();
         return new ResponseEntity<>(fileDataList, OK);
     }
 

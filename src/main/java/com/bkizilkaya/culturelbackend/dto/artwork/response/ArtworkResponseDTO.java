@@ -1,5 +1,6 @@
 package com.bkizilkaya.culturelbackend.dto.artwork.response;
 
+import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,5 @@ public class ArtworkResponseDTO {
     private LocalDateTime createDate;
     private Long authorId;
     private Integer zipCode;
-    private List<FileData> fileDataList;
+    private List<FileDataResponseDTO> fileDataList;
 }

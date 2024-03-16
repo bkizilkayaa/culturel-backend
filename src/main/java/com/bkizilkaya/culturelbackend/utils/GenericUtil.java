@@ -5,6 +5,7 @@ import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.model.Artwork;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 public class GenericUtil {
     public static Artwork artworkMapper(ArtworkCreateDTO artworkCreateDTO) {
@@ -36,7 +37,7 @@ public class GenericUtil {
         return ArtworkResponseDTO.builder()
                 .Id(artwork.getID())
                 .authorId(artwork.getAuthorId())
-                .fileDataList(artwork.getFiles())
+                .fileDataList(artwork.getFiles().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()))
                 .content(artwork.getContent())
                 .createDate(LocalDateTime.now())
                 .title(artwork.getTitle())
@@ -49,7 +50,7 @@ public class GenericUtil {
                 .createDate(artworkCreateDTO.getCreateDate())
                 .authorId(artworkCreateDTO.getAuthorId())
                 .content(artworkCreateDTO.getContent())
-                .fileDataList(artworkCreateDTO.getFileDataList())
+                .fileDataList(artworkCreateDTO.getFileDataList().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()))
                 .title(artworkCreateDTO.getTitle())
                 .build();
     }
