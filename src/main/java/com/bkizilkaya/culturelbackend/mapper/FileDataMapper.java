@@ -1,4 +1,4 @@
-package com.bkizilkaya.culturelbackend.utils;
+package com.bkizilkaya.culturelbackend.mapper;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.FileData;

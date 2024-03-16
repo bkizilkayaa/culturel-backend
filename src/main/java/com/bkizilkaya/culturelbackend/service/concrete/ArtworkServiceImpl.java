@@ -7,7 +7,7 @@ import com.bkizilkaya.culturelbackend.model.Artwork;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
-import com.bkizilkaya.culturelbackend.utils.ArtworkMapper;
+import com.bkizilkaya.culturelbackend.mapper.ArtworkMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

@@ -7,7 +7,7 @@ import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.FileDataRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
-import com.bkizilkaya.culturelbackend.utils.FileDataMapper;
+import com.bkizilkaya.culturelbackend.mapper.FileDataMapper;
 import com.bkizilkaya.culturelbackend.utils.ImageValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
