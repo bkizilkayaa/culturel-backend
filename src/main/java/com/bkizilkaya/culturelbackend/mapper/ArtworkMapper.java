@@ -37,7 +37,7 @@ public class ArtworkMapper {
         return ArtworkResponseDTO.builder()
                 .Id(artwork.getID())
                 .authorId(artwork.getAuthorId())
-                .fileDataList(artwork.getFiles().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()))
+                .fileDataList(artwork.getFiles() != null ? artwork.getFiles().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()) : null)
                 .content(artwork.getContent())
                 .createDate(LocalDateTime.now())
                 .title(artwork.getTitle())
@@ -50,7 +50,7 @@ public class ArtworkMapper {
                 .createDate(artworkCreateDTO.getCreateDate())
                 .authorId(artworkCreateDTO.getAuthorId())
                 .content(artworkCreateDTO.getContent())
-                .fileDataList(artworkCreateDTO.getFileDataList().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()))
+                .fileDataList(artworkCreateDTO.getFileDataList() != null ? artworkCreateDTO.getFileDataList().stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList()) : null)
                 .title(artworkCreateDTO.getTitle())
                 .build();
     }
