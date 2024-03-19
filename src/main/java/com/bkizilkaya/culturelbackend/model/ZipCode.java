@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,8 +20,9 @@ import lombok.Setter;
 @Setter
 public class ZipCode {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    @GeneratedValue(generator = "genZipCodeSeq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "genZipCodeSeq", sequenceName = "SEQ_ZIP_CODES", initialValue = 1000, allocationSize = 1)
+    private Long Id;
     @Column
     private String name;
     @Column

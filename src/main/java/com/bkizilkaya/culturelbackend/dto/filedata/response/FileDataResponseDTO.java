@@ -10,9 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class FileDataResponseDTO {
-    private Long ID;
+    private Long Id;
     private String name;
     private String type;
 }

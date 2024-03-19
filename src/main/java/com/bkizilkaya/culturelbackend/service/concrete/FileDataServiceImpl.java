@@ -4,10 +4,10 @@ import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.exception.ImageNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.ValidationException;
+import com.bkizilkaya.culturelbackend.mapper.FileDataMapper;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.FileDataRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
-import com.bkizilkaya.culturelbackend.mapper.FileDataMapper;
 import com.bkizilkaya.culturelbackend.utils.ImageValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class FileDataServiceImpl implements StorageService {
     @Override
     public List<FileDataResponseDTO> getAll() {
         List<FileData> fileDataListFromDb = fileDataRepository.findAll();
-        return fileDataListFromDb.stream().map(FileDataMapper::fileDataMapperForResponseDto).collect(Collectors.toList());
+        return fileDataListFromDb.stream().map(FileDataMapper.INSTANCE::fileDataToResponseDto).collect(Collectors.toList());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class FileDataServiceImpl implements StorageService {
                     .name(fileName)
                     .createDate(LocalDateTime.now())
                     .type(multiPartFile.getContentType()).build());
-            return fileData.getID();
+            return fileData.getId();
         }
         return null;
     }

@@ -39,7 +39,7 @@ public class ArtworkController {
 
     @GetMapping("/{artworkId}/images")
     public ResponseEntity<List<FileDataResponseDTO>> getArtworkImage(@PathVariable Long artworkId) {
-        List<FileDataResponseDTO> fileDataList = artworkService.getArtworkGivenId(artworkId).getFileDataList();
+        List<FileDataResponseDTO> fileDataList = artworkService.getArtworkGivenId(artworkId).getFileData();
         return new ResponseEntity<>(fileDataList, OK);
     }
 

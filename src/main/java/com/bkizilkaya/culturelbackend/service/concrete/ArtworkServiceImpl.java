@@ -3,11 +3,11 @@ package com.bkizilkaya.culturelbackend.service.concrete;
 import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.exception.ArtworkNotFoundException;
+import com.bkizilkaya.culturelbackend.mapper.ArtworkMapper;
 import com.bkizilkaya.culturelbackend.model.Artwork;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
-import com.bkizilkaya.culturelbackend.mapper.ArtworkMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,25 +30,26 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     @Override
     public ArtworkResponseDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
+        ArtworkResponseDTO artworkResponseDTO = ArtworkMapper.INSTANCE.createDtoToResponseDto(artworkCreateDTO);
         if (artworkCreateDTO.getParentId() != null) {
             getArtworkById(artworkCreateDTO.getParentId());
         }
 
-        Artwork artwork = ArtworkMapper.artworkMapper(artworkCreateDTO);
+        Artwork artwork = ArtworkMapper.INSTANCE.dtoToEntity(artworkCreateDTO);
         artworkRepository.save(artwork);
-        return ArtworkMapper.artworkMapperForResponse(artwork);
+        return artworkResponseDTO;
     }
 
     @Override
     public List<ArtworkResponseDTO> getAllArtworks() {
         List<Artwork> allArtworks = artworkRepository.findAll();
-        return allArtworks.stream().map(ArtworkMapper::artworkMapperForResponse).collect(Collectors.toList());
+        return allArtworks.stream().map(ArtworkMapper.INSTANCE::artworkToResponseDto).collect(Collectors.toList());
     }
 
     @Override
     public ArtworkResponseDTO getArtworkGivenId(Long artworkId) {
         Artwork artworkById = getArtworkById(artworkId);
-        return ArtworkMapper.artworkMapperForResponse(artworkById);
+        return ArtworkMapper.INSTANCE.artworkToResponseDto(artworkById);
     }
 
     @Override
@@ -56,8 +57,8 @@ public class ArtworkServiceImpl implements ArtworkService {
         Artwork artworkFromDb = getArtworkById(id);
         artworkFromDb.setTitle(artworkCreateDTO.getTitle());
         artworkFromDb.setContent(artworkCreateDTO.getContent());
-        artworkFromDb.setFileData(artworkCreateDTO.getFileDataList());
-        return ArtworkMapper.artworkMapperForResponse(artworkFromDb);
+        artworkFromDb.setFileData(artworkCreateDTO.getFileData());
+        return ArtworkMapper.INSTANCE.artworkToResponseDto(artworkFromDb);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ArtworkServiceImpl implements ArtworkService {
 
 
             fileData.setArtworkImages(artwork);
-            artwork.getFiles().add(fileData);
+            artwork.getFileData().add(fileData);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -87,7 +88,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     public void removeArtworkImageFromArtwork(Long artworkId, Long imageId) {
         Artwork artwork = getArtworkById(artworkId);
         FileData fileDataFromDb = fileDataService.findById(imageId);
-        artwork.getFiles().remove(fileDataFromDb);
+        artwork.getFileData().remove(fileDataFromDb);
         fileDataFromDb.setArtworkImages(null);
     }
 

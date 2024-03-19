@@ -1,6 +1,6 @@
-package com.bkizilkaya.culturelbackend.dto.artwork.response;
+package com.bkizilkaya.culturelbackend.dto.spot.request;
 
-import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
+import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.model.ZipCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtworkResponseDTO {
+public class TouristSpotCreateDTO {
     private Long Id;
     private String title;
     private String content;
@@ -23,5 +23,6 @@ public class ArtworkResponseDTO {
     private LocalDateTime modifiedDate;
     private Long authorId;
     private ZipCode zipCode;
-    private List<FileDataResponseDTO> fileData;
+    private List<FileData> fileData;
+    private Long parentId;
 }

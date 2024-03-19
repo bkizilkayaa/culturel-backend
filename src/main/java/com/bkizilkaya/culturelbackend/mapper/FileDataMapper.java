@@ -2,12 +2,13 @@ package com.bkizilkaya.culturelbackend.mapper;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.FileData;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public class FileDataMapper {
-    public static FileDataResponseDTO fileDataMapperForResponseDto(FileData fileData) {
-        return FileDataResponseDTO.builder().ID(fileData.getID())
-                .type(fileData.getType())
-                .name(fileData.getName())
-                .build();
-    }
+@Mapper
+public interface FileDataMapper {
+    FileDataMapper INSTANCE = Mappers.getMapper(FileDataMapper.class);
+
+    FileDataResponseDTO fileDataToResponseDto(FileData fileData);
+
 }

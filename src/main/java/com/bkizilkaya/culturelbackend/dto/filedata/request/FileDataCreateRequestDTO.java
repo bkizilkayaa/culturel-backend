@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class FileDataCreateRequestDTO {
     private MultipartFile multipartFile;
 }

@@ -21,15 +21,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "ARTWORKS")
+@Table(name = "TOURIST_SPOT")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Artwork {
+public class TouristSpot {
     @Id
-    @GeneratedValue(generator = "genArtworkSeq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "genArtworkSeq", sequenceName = "SEQ_ARTWORKS", initialValue = 1000, allocationSize = 1)
+    @GeneratedValue(generator = "genTouristSpotSeq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "genTouristSpotSeq", sequenceName = "SEQ_TOURIST_SPOT", initialValue = 1000, allocationSize = 1)
     private Long Id;
 
     @Column(name = "TITLE")
@@ -42,16 +42,16 @@ public class Artwork {
     @Lob
     private String content;
 
+    @Column(name = "PARENT_ID")
+    private Long parentId;
+
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
     @Column(name = "MODIFIED_DATE")
     private LocalDateTime modifiedDate;
 
-    @Column(name = "PARENT_ID")
-    private Long parentId;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artworkImages", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "touristSpotImages", cascade = CascadeType.ALL)
     private List<FileData> fileData;
 
     @Column
@@ -59,6 +59,5 @@ public class Artwork {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ZipCode zipCode;
-
 
 }
