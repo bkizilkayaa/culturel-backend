@@ -89,7 +89,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         Artwork artwork = getArtworkById(artworkId);
         FileData fileDataFromDb = fileDataService.findById(imageId);
         if (artwork.getFileData().stream().noneMatch(fileData -> fileData.getId().equals(imageId))) {
-            throw new SpecifiedFileNotFoundException("FileData with id: " + imageId + " not found.");
+            throw new SpecifiedFileNotFoundException("FileData not found in Object.");
         } else {
             artwork.setFileData(artwork.getFileData()
                     .stream()

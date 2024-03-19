@@ -86,7 +86,7 @@ public class FileDataServiceImpl implements StorageService {
 
     protected FileData findById(Long fileId) {
         return fileDataRepository.findById(fileId)
-                .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with id : "));
+                .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with id"));
     }
 
     @Override
