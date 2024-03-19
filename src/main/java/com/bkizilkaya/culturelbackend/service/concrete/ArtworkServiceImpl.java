@@ -30,14 +30,13 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     @Override
     public ArtworkResponseDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
-        ArtworkResponseDTO artworkResponseDTO = ArtworkMapper.INSTANCE.createDtoToResponseDto(artworkCreateDTO);
         if (artworkCreateDTO.getParentId() != null) {
             getArtworkById(artworkCreateDTO.getParentId());
         }
 
         Artwork artwork = ArtworkMapper.INSTANCE.dtoToEntity(artworkCreateDTO);
         artworkRepository.save(artwork);
-        return artworkResponseDTO;
+        return ArtworkMapper.INSTANCE.artworkToResponseDto(artwork);
     }
 
     @Override
