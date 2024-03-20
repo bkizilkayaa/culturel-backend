@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,13 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
+    public List<ArtworkResponseDTO> getAllArtworks() {
+        List<Artwork> allArtworks = artworkRepository.findAll();
+        return allArtworks.stream().map(ArtworkMapper.INSTANCE::artworkToResponseDto).collect(Collectors.toList());
+    }
+
+
+    @Override
     public ArtworkResponseDTO addArtwork(ArtworkCreateDTO artworkCreateDTO) {
         if (artworkCreateDTO.getParentId() != null) {
             getArtworkById(artworkCreateDTO.getParentId());
@@ -38,12 +46,6 @@ public class ArtworkServiceImpl implements ArtworkService {
         Artwork artwork = ArtworkMapper.INSTANCE.dtoToEntity(artworkCreateDTO);
         artworkRepository.save(artwork);
         return ArtworkMapper.INSTANCE.artworkToResponseDto(artwork);
-    }
-
-    @Override
-    public List<ArtworkResponseDTO> getAllArtworks() {
-        List<Artwork> allArtworks = artworkRepository.findAll();
-        return allArtworks.stream().map(ArtworkMapper.INSTANCE::artworkToResponseDto).collect(Collectors.toList());
     }
 
     @Override
@@ -56,8 +58,9 @@ public class ArtworkServiceImpl implements ArtworkService {
     public ArtworkResponseDTO updateArtwork(Long id, ArtworkCreateDTO artworkCreateDTO) {
         Artwork artworkFromDb = getArtworkById(id);
         artworkFromDb.setTitle(artworkCreateDTO.getTitle());
+        artworkFromDb.setDescription(artworkFromDb.getDescription());
         artworkFromDb.setContent(artworkCreateDTO.getContent());
-        artworkFromDb.setFileData(artworkCreateDTO.getFileData());
+        artworkFromDb.setModifiedDate(LocalDateTime.now());
         return ArtworkMapper.INSTANCE.artworkToResponseDto(artworkFromDb);
     }
 

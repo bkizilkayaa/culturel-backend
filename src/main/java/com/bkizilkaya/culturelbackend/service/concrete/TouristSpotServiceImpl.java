@@ -2,12 +2,19 @@ package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.spot.request.TouristSpotCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.spot.response.TouristSpotResponseDTO;
+import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
+import com.bkizilkaya.culturelbackend.exception.SpotNotFoundException;
 import com.bkizilkaya.culturelbackend.mapper.TouristSpotMapper;
+import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.model.TouristSpot;
 import com.bkizilkaya.culturelbackend.repo.TouristSpotRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.TouristSpotService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +33,12 @@ public class TouristSpotServiceImpl implements TouristSpotService {
 
     @Override
     public TouristSpotResponseDTO addSpot(TouristSpotCreateDTO touristSpotCreateDto) {
-        return null;
+        if (touristSpotCreateDto.getParentId() != null) {
+            TouristSpot parentSpot = getSpotGivenId(touristSpotCreateDto.getParentId());
+        }
+        TouristSpot touristSpot = TouristSpotMapper.INSTANCE.dtoToEntity(touristSpotCreateDto);
+        touristSpotRepository.save(touristSpot);
+        return TouristSpotMapper.INSTANCE.entityToResponseDto(touristSpot);
     }
 
     @Override
@@ -37,21 +49,60 @@ public class TouristSpotServiceImpl implements TouristSpotService {
 
     @Override
     public TouristSpotResponseDTO getSpotById(Long spotId) {
-        return null;
+        TouristSpot touristSpot = getSpotGivenId(spotId);
+        return TouristSpotMapper.INSTANCE.entityToResponseDto(touristSpot);
     }
 
     @Override
     public TouristSpotResponseDTO updateSpot(Long spotId, TouristSpotCreateDTO touristSpotCreateDto) {
-        return null;
+        TouristSpot spotFromDb = getSpotGivenId(spotId);
+        spotFromDb.setContent(touristSpotCreateDto.getContent());
+        spotFromDb.setTitle(touristSpotCreateDto.getTitle());
+        spotFromDb.setDescription(touristSpotCreateDto.getDescription());
+        spotFromDb.setModifiedDate(LocalDateTime.now());
+        return TouristSpotMapper.INSTANCE.entityToResponseDto(spotFromDb);
     }
 
     @Override
     public void deleteSpot(Long spotId) {
-
+        TouristSpot spotFromDb = getSpotGivenId(spotId);
+        touristSpotRepository.deleteById(spotId);
     }
 
     @Override
     public void removeSpotImageFromSpot(Long spotId, Long imageId) {
+        TouristSpot touristSpot = getSpotGivenId(spotId);
+        FileData fileDataFromDb = fileDataService.findById(imageId);
+        if (touristSpot.getFileData().stream().noneMatch(fileData -> fileData.getId().equals(imageId))) {
+            throw new SpecifiedFileNotFoundException("FileData not found in Object.");
+        } else {
+            touristSpot.setFileData(touristSpot.getFileData()
+                    .stream()
+                    .filter(fileData -> !fileData.getId().equals(imageId))
+                    .collect(Collectors.toList()));
 
+            fileDataFromDb.setTouristSpotImages(null);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long addImageToSpot(Long spotId, MultipartFile file) {
+        try {
+            Long fileId = fileDataService.saveFile(file);
+            FileData fileData = fileDataService.findById(fileId);
+            TouristSpot touristSpot = getSpotGivenId(spotId);
+
+            fileData.setTouristSpotImages(touristSpot);
+            touristSpot.getFileData().add(fileData);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return spotId;
+    }
+
+    protected TouristSpot getSpotGivenId(Long spotId) {
+        return touristSpotRepository.findById(spotId)
+                .orElseThrow(() -> new SpotNotFoundException("Spot not found by id"));
     }
 }

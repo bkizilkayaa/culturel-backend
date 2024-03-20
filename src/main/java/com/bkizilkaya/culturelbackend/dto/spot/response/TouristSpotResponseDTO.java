@@ -1,5 +1,6 @@
 package com.bkizilkaya.culturelbackend.dto.spot.response;
 
+import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.model.ZipCode;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,6 @@ public class TouristSpotResponseDTO {
     private LocalDateTime modifiedDate;
     private Long authorId;
     private ZipCode zipCode;
-    private List<FileData> fileData;
+    private List<FileDataResponseDTO> fileData;
     private Long parentId;
 }

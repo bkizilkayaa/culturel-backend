@@ -2,6 +2,7 @@ package com.bkizilkaya.culturelbackend.service.abstraction;
 
 import com.bkizilkaya.culturelbackend.dto.spot.request.TouristSpotCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.spot.response.TouristSpotResponseDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface TouristSpotService {
 
     void removeSpotImageFromSpot(Long spotId, Long imageId);
 
+    Long addImageToSpot(Long spotId, MultipartFile file);
 }
