@@ -2,6 +2,7 @@ package com.bkizilkaya.culturelbackend.dto.spot.request;
 
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.model.ZipCode;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonPropertyOrder({"id", "title", "content", "description", "createDate", "modifiedDate", "zipCode", "authorId", "parentId", "fileData"})
 public class TouristSpotCreateDTO {
     private Long Id;
     private String title;

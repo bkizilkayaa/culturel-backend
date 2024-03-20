@@ -2,6 +2,7 @@ package com.bkizilkaya.culturelbackend.dto.artwork.response;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.model.ZipCode;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonPropertyOrder({"id", "title", "content", "description", "createDate", "modifiedDate", "zipCode", "authorId", "parentId", "fileData"})
 @AllArgsConstructor
 public class ArtworkResponseDTO {
     private Long Id;
@@ -22,6 +24,7 @@ public class ArtworkResponseDTO {
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
     private Long authorId;
+    private Long parentId;
     private ZipCode zipCode;
     private List<FileDataResponseDTO> fileData;
 }
