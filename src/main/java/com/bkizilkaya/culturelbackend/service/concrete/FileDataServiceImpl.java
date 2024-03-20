@@ -91,4 +91,14 @@ public class FileDataServiceImpl implements StorageService {
         }
     }
 
+    @Override
+    public List<Long> findUnusedFilesId() {
+        return fileDataRepository.findUnusedFilesId().orElseThrow(()-> new RuntimeException("an error occured when fetching data from db"));
+    }
+
+    @Override
+    public List<String> findUnusedFilesName() {
+        return fileDataRepository.findUnusedFilesName().orElseThrow(()-> new RuntimeException("an error occured when fetching data from db"));
+    }
+
 }

@@ -17,4 +17,8 @@ public interface StorageService {
     byte[] downloadFileByteCode(String fileName) throws IOException;
 
     void deleteFile(Long fileId);
+
+    List<Long> findUnusedFilesId();
+
+    List<String> findUnusedFilesName();
 }

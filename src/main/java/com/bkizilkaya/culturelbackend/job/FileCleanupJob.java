@@ -1,8 +1,5 @@
 package com.bkizilkaya.culturelbackend.job;
 
-import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
-import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
-import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,43 +15,29 @@ public class FileCleanupJob {
 
     @Value("${local.file.path}")
     private String FOLDER_PATH;
-    private final ArtworkService artworkService;
     private final StorageService storageService;
 
-    public FileCleanupJob(ArtworkService artworkService, StorageService storageService) {
-        this.artworkService = artworkService;
+    public FileCleanupJob(StorageService storageService) {
         this.storageService = storageService;
     }
 
-    @Scheduled(cron = "0 0 */2 * * *")
+    //2 saatte bir 0 0 */2 * * *
+    //dakikada bir 0 */1 * * * *
+    @Scheduled(cron = "0 */1 * * * *")
     public void cleanupData() {
         log.warn("FileCleanupJob basladi...");
-        List<FileDataResponseDTO> allFileDatas = storageService.getAll();
-        List<Long> allFileDataIds = new ArrayList<>(allFileDatas.stream().map(FileDataResponseDTO::getId).toList());
-
-        List<ArtworkResponseDTO> allArtworks = artworkService.getAllArtworks();
-
-        List<Long> allArtworksFileDataIds = allArtworks.stream()
-                .flatMap(artwork -> artwork.getFileData().stream().map(FileDataResponseDTO::getId))
-                .toList();
-
-        allFileDataIds.removeAll(allArtworksFileDataIds);
-        //allFileDataIds içerisinde kullanılmayan ancak veritabanında mevcut file lar bulunuyor.
+        List<Long> allFileDataIds = storageService.findUnusedFilesId();
+        //allFileDataIds içerisinde kullanılmayan ancak veritabanında mevcut file id ler bulunuyor.
+        List<String> allFileDataNames = storageService.findUnusedFilesName();
+        //allFileDataNames içerisinde kullanılmayan ancak veritabanında mevcut file nameler bulunuyor.
 
         if (allFileDataIds.size() == 0) {
             log.info("Dosya yolu ile veritabani senkron halde!");
         } else {
-            List<String> fileNames = allFileDataIds.stream()
-                    .map(id -> allFileDatas.stream()
-                            .filter(data -> data.getId().equals(id))
-                            .findFirst()
-                            .map(FileDataResponseDTO::getName)
-                            .orElse(null))
-                    .toList();
-
             deleteFilesFromDb(allFileDataIds);
-            deleteFilesFromPath(fileNames);
+            deleteFilesFromPath(allFileDataNames);
         }
+
         log.warn("FileCleanupJob bitti");
     }
 
