@@ -1,35 +1,33 @@
 package com.bkizilkaya.culturelbackend.service.concrete;
 
+import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import com.bkizilkaya.culturelbackend.service.abstraction.PathService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 public class PathServiceImpl implements PathService {
     private static final String DOT = ".";
-    private static final String EMPTY_STRING = " ";
 
     @Override
     public String generateFileName(MultipartFile file) {
         if (file.getOriginalFilename() != null) {
             return UUID.randomUUID() + DOT + getFileExtension(file.getOriginalFilename());
+        } else {
+            throw new ValidationException("file has no name");
         }
-        return EMPTY_STRING;
     }
 
     @Override
-    public String getFileExtension(String originalFilename) {
-        if (originalFilename != null) {
-            Pattern pattern = Pattern.compile("\\.(\\w+)$");
-            Matcher matcher = pattern.matcher(originalFilename);
-            if (matcher.find()) {
-                return matcher.group(1);
-            }
+    public String getFileExtension(String originalFileName) {
+        if (originalFileName != null && !originalFileName.isEmpty()) {
+            return FilenameUtils.getExtension(originalFileName);
         }
-        return null;
+        else{
+            throw new ValidationException("file has no name");
+        }
     }
 }

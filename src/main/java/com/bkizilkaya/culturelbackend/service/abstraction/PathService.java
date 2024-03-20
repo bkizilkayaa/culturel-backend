@@ -6,6 +6,6 @@ public interface PathService {
 
     String generateFileName(MultipartFile file);
 
-    String getFileExtension(String originalFilename);
+    String getFileExtension(String originalFileName);
 
 }

@@ -1,7 +1,6 @@
 package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
-import com.bkizilkaya.culturelbackend.exception.ImageNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import com.bkizilkaya.culturelbackend.mapper.FileDataMapper;
@@ -51,10 +50,6 @@ public class FileDataServiceImpl implements StorageService {
         String fileName = pathService.generateFileName(multiPartFile);
         String filePath = FOLDER_PATH + fileName;
         Long fileId = saveFileDataToDatabase(multiPartFile, fileName);
-
-        if (fileId == null) {
-            throw new ValidationException("file is not valid");
-        }
         multiPartFile.transferTo(new File(filePath));
         return fileId;
     }
@@ -67,15 +62,12 @@ public class FileDataServiceImpl implements StorageService {
     }
 
     private Long saveFileDataToDatabase(MultipartFile multiPartFile, String fileName) {
-        String fileExtension = pathService.getFileExtension(multiPartFile.getOriginalFilename());
-        if (fileExtension != null) {
-            FileData fileData = fileDataRepository.save(FileData.builder()
-                    .name(fileName)
-                    .createDate(LocalDateTime.now())
-                    .type(multiPartFile.getContentType()).build());
-            return fileData.getId();
-        }
-        return null;
+        pathService.getFileExtension(multiPartFile.getOriginalFilename());
+        FileData fileData = fileDataRepository.save(FileData.builder()
+                .name(fileName)
+                .createDate(LocalDateTime.now())
+                .type(multiPartFile.getContentType()).build());
+        return fileData.getId();
     }
 
     @Override
@@ -95,7 +87,7 @@ public class FileDataServiceImpl implements StorageService {
         if (fileDataFromDb != null) {
             fileDataRepository.deleteById(fileId);
         } else {
-            throw new ImageNotFoundException("file not found");
+            throw new SpecifiedFileNotFoundException("file not found with id");
         }
     }
 
