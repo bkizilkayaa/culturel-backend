@@ -23,7 +23,7 @@ public class FileCleanupJob {
 
     //2 saatte bir 0 0 */2 * * *
     //dakikada bir 0 */1 * * * *
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 0 */2 * * *")
     public void cleanupData() {
         log.warn("FileCleanupJob basladi...");
         List<Long> allFileDataIds = storageService.findUnusedFilesId();
