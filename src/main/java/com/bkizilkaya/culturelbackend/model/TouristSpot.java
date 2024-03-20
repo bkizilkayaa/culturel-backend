@@ -51,7 +51,7 @@ public class TouristSpot {
     @Column(name = "MODIFIED_DATE")
     private LocalDateTime modifiedDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "touristSpotImages", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "touristSpotImages", cascade = CascadeType.ALL)
     private List<FileData> fileData;
 
     @Column

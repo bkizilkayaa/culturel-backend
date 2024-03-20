@@ -51,7 +51,7 @@ public class Artwork {
     @Column(name = "PARENT_ID")
     private Long parentId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artworkImages", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "artworkImages", cascade = CascadeType.ALL)
     private List<FileData> fileData;
 
     @Column
