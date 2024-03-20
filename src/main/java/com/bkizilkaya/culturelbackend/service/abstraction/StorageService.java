@@ -14,7 +14,7 @@ public interface StorageService {
 
     FileData findByName(String fileName);
 
-    byte[] downloadFileByteCode(String fileName) throws IOException;
+    String getFilePathFromStorage(String fileName);
 
     void deleteFile(Long fileId);
 

@@ -3,7 +3,6 @@ package com.bkizilkaya.culturelbackend.controller;
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
 import com.bkizilkaya.culturelbackend.service.abstraction.StorageService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,11 +39,9 @@ public class FileController {
     }
 
     @GetMapping("/{fileName}")
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
-        byte[] imageData = storageService.downloadFileByteCode(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(imageData);
+    public ResponseEntity<String> getFilePathFromStorage(@PathVariable String fileName) throws IOException {
+        String imageData = storageService.getFilePathFromStorage(fileName);
+        return ResponseEntity.status(HttpStatus.OK).body(imageData);
     }
 
     @DeleteMapping("/{fileId}")

@@ -55,10 +55,9 @@ public class FileDataServiceImpl implements StorageService {
     }
 
     @Override
-    public byte[] downloadFileByteCode(String fileName) throws IOException {
+    public String getFilePathFromStorage(String fileName){
         FileData fileData = findByName(fileName);
-        String filePath = FOLDER_PATH + fileData.getName();
-        return Files.readAllBytes(new File(filePath).toPath());
+        return FOLDER_PATH + fileData.getName();
     }
 
     private Long saveFileDataToDatabase(MultipartFile multiPartFile, String fileName) {
