@@ -57,10 +57,15 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Override
     public ArtworkResponseDTO updateArtwork(Long id, ArtworkCreateDTO artworkCreateDTO) {
         Artwork artworkFromDb = getArtworkById(id);
+
         artworkFromDb.setTitle(artworkCreateDTO.getTitle());
-        artworkFromDb.setDescription(artworkFromDb.getDescription());
+        artworkFromDb.setDescription(artworkCreateDTO.getDescription());
         artworkFromDb.setContent(artworkCreateDTO.getContent());
+        artworkFromDb.setAuthorId(artworkCreateDTO.getAuthorId());
+        artworkFromDb.setParentId(artworkCreateDTO.getParentId());
         artworkFromDb.setModifiedDate(LocalDateTime.now());
+
+        artworkRepository.save(artworkFromDb);
         return ArtworkMapper.INSTANCE.artworkToResponseDto(artworkFromDb);
     }
 
