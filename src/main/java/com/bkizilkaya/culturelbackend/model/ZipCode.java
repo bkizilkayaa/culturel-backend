@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "ZIP_CODES")
 @AllArgsConstructor
@@ -27,4 +29,9 @@ public class ZipCode {
     private String name;
     @Column
     private String value;
+    @Column(name = "CREATE_DATE")
+    private LocalDateTime createDate;
+
+    @Column(name = "MODIFIED_DATE")
+    private LocalDateTime modifiedDate;
 }
