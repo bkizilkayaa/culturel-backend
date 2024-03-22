@@ -1,8 +1,7 @@
 package com.bkizilkaya.culturelbackend.handler;
 
-import com.bkizilkaya.culturelbackend.exception.ArtworkNotFoundException;
 import com.bkizilkaya.culturelbackend.exception.CustomErrorResponse;
-import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
+import com.bkizilkaya.culturelbackend.exception.NotFoundException;
 import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -33,19 +32,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {ArtworkNotFoundException.class})
-    public ResponseEntity<CustomErrorResponse> handleCustomException(ArtworkNotFoundException ex) {
-        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(NOT_FOUND.value())
-                .error(NOT_FOUND.getReasonPhrase())
-                .message(ex.getMessage())
-                .path(request.getRequestURI()).build();
-        return new ResponseEntity<>(errorResponse, NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = {SpecifiedFileNotFoundException.class})
-    public ResponseEntity<CustomErrorResponse> handleCustomException(SpecifiedFileNotFoundException ex) {
+    @ExceptionHandler(value = {NotFoundException.class})
+    public ResponseEntity<CustomErrorResponse> handleCustomException(NotFoundException ex) {
         CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(NOT_FOUND.value())

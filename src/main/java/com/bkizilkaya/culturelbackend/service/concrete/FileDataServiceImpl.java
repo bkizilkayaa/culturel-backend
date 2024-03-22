@@ -1,7 +1,7 @@
 package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.filedata.response.FileDataResponseDTO;
-import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
+import com.bkizilkaya.culturelbackend.exception.NotFoundException;
 import com.bkizilkaya.culturelbackend.exception.ValidationException;
 import com.bkizilkaya.culturelbackend.mapper.FileDataMapper;
 import com.bkizilkaya.culturelbackend.model.FileData;
@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +54,7 @@ public class FileDataServiceImpl implements StorageService {
     }
 
     @Override
-    public String getFilePathFromStorage(String fileName){
+    public String getFilePathFromStorage(String fileName) {
         FileData fileData = findByName(fileName);
         return FOLDER_PATH + fileData.getName();
     }
@@ -72,12 +71,12 @@ public class FileDataServiceImpl implements StorageService {
     @Override
     public FileData findByName(String fileName) {
         return fileDataRepository.findByName(fileName)
-                .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with name : ", fileName));
+                .orElseThrow(() -> new NotFoundException(FileData.class, fileName));
     }
 
     protected FileData findById(Long fileId) {
         return fileDataRepository.findById(fileId)
-                .orElseThrow(() -> new SpecifiedFileNotFoundException("file not found with id"));
+                .orElseThrow(() -> new NotFoundException(FileData.class));
     }
 
     @Override
@@ -86,18 +85,18 @@ public class FileDataServiceImpl implements StorageService {
         if (fileDataFromDb != null) {
             fileDataRepository.deleteById(fileId);
         } else {
-            throw new SpecifiedFileNotFoundException("file not found with id");
+            throw new NotFoundException(FileData.class);
         }
     }
 
     @Override
     public List<Long> findUnusedFilesId() {
-        return fileDataRepository.findUnusedFilesId().orElseThrow(()-> new RuntimeException("an error occured when fetching data from db"));
+        return fileDataRepository.findUnusedFilesId().orElseThrow(() -> new RuntimeException("an error occured when fetching data from db"));
     }
 
     @Override
     public List<String> findUnusedFilesName() {
-        return fileDataRepository.findUnusedFilesName().orElseThrow(()-> new RuntimeException("an error occured when fetching data from db"));
+        return fileDataRepository.findUnusedFilesName().orElseThrow(() -> new RuntimeException("an error occured when fetching data from db"));
     }
 
 }

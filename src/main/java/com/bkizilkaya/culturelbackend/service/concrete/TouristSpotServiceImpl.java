@@ -2,8 +2,7 @@ package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.spot.request.TouristSpotCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.spot.response.TouristSpotResponseDTO;
-import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
-import com.bkizilkaya.culturelbackend.exception.SpotNotFoundException;
+import com.bkizilkaya.culturelbackend.exception.NotFoundException;
 import com.bkizilkaya.culturelbackend.mapper.TouristSpotMapper;
 import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.model.TouristSpot;
@@ -80,7 +79,7 @@ public class TouristSpotServiceImpl implements TouristSpotService {
         TouristSpot touristSpot = getSpotGivenId(spotId);
         FileData fileDataFromDb = fileDataService.findById(imageId);
         if (touristSpot.getFileData().stream().noneMatch(fileData -> fileData.getId().equals(imageId))) {
-            throw new SpecifiedFileNotFoundException("FileData not found in Object.");
+            throw new NotFoundException(FileData.class);
         } else {
             touristSpot.setFileData(touristSpot.getFileData()
                     .stream()
@@ -109,6 +108,6 @@ public class TouristSpotServiceImpl implements TouristSpotService {
 
     protected TouristSpot getSpotGivenId(Long spotId) {
         return touristSpotRepository.findById(spotId)
-                .orElseThrow(() -> new SpotNotFoundException("Spot not found by id"));
+                .orElseThrow(() -> new NotFoundException(TouristSpot.class));
     }
 }

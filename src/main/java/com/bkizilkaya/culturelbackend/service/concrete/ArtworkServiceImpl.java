@@ -2,8 +2,7 @@ package com.bkizilkaya.culturelbackend.service.concrete;
 
 import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
-import com.bkizilkaya.culturelbackend.exception.ArtworkNotFoundException;
-import com.bkizilkaya.culturelbackend.exception.SpecifiedFileNotFoundException;
+import com.bkizilkaya.culturelbackend.exception.NotFoundException;
 import com.bkizilkaya.culturelbackend.mapper.ArtworkMapper;
 import com.bkizilkaya.culturelbackend.model.Artwork;
 import com.bkizilkaya.culturelbackend.model.FileData;
@@ -97,7 +96,7 @@ public class ArtworkServiceImpl implements ArtworkService {
         Artwork artwork = getArtworkById(artworkId);
         FileData fileDataFromDb = fileDataService.findById(imageId);
         if (artwork.getFileData().stream().noneMatch(fileData -> fileData.getId().equals(imageId))) {
-            throw new SpecifiedFileNotFoundException("FileData not found in Object.");
+            throw new NotFoundException(FileData.class);
         } else {
             artwork.setFileData(artwork.getFileData()
                     .stream()
@@ -110,6 +109,6 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     protected Artwork getArtworkById(Long artworkId) {
         return artworkRepository.findById(artworkId)
-                .orElseThrow(() -> new ArtworkNotFoundException("artwork not found by id"));
+                .orElseThrow(() -> new NotFoundException(Artwork.class));
     }
 }
