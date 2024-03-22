@@ -75,6 +75,7 @@ public class TouristSpotServiceImpl implements TouristSpotService {
     }
 
     @Override
+    @Transactional
     public void removeSpotImageFromSpot(Long spotId, Long imageId) {
         TouristSpot touristSpot = getSpotGivenId(spotId);
         FileData fileDataFromDb = fileDataService.findById(imageId);
