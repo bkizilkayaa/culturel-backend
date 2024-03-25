@@ -35,7 +35,7 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImageToFileSystem(@RequestParam("image") MultipartFile multipartFile) throws IOException {
         Long imageId = storageService.saveFile(multipartFile);
-        return ResponseEntity.status(HttpStatus.OK).body(imageId + " idli resim eklendi");
+        return ResponseEntity.status(HttpStatus.OK).body("Resim dosya yoluna eklendi");
     }
 
     @GetMapping("/{fileName}")

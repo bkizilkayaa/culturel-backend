@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:p="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Artworks List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            width: 10%;
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+
+        tr p {
+            display: block;
+            max-height: 220px !important;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Artworks List</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Content</th>
+        <th>CreateDate</th>
+        <th>ModifiedDate</th>
+        <th>Files</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="artwork : ${artwork}">
+        <td th:text="${artwork.id}">Artwork ID</td>
+        <td th:text="${artwork.title}">Artwork Title</td>
+        <td th:text="${artwork.description}">Artwork Description</td>
+        <td>
+            <div>
+                <p th:text="${artwork.content}"> Artwork content</p>
+            </div>
+        </td>
+
+        <td th:text="${artwork.getCreateDate()}">Artwork CreateDate</td>
+        <td th:text="${artwork.getModifiedDate()}">Artwork ModifiedDate</td>
+        <td>
+            <div th:each="fileData : ${artwork.fileData}">
+                <img th:src="${'/files/' + fileData.name}" alt="Artwork Image" height="80px" width="200px" />
+            </div>
+        </td>
+
+        <td>
+            <a>Edit</a>
+            <a>Delete</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

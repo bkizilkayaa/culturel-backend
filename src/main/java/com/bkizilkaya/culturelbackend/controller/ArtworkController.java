@@ -46,7 +46,7 @@ public class ArtworkController {
     @PostMapping("/{artworkId}/images")
     public ResponseEntity<String> addImageToArtwork(@PathVariable Long artworkId, @RequestParam("image") MultipartFile file) {
         Long artworkImagesArtworkId = artworkService.addImageToArtwork(artworkId, file);
-        String returnMessage = artworkImagesArtworkId + " idli artworke resim eklendi";
+        String returnMessage = "Artworke basariyla resim eklendi";
         return new ResponseEntity<>(returnMessage, OK);
     }
 

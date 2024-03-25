@@ -46,7 +46,7 @@ public class TouristSpotController {
     @PostMapping("/{spotId}/images")
     public ResponseEntity<String> addImageToSpot(@PathVariable Long spotId, @RequestParam("image") MultipartFile file) {
         Long spotImagesSpotId = touristSpotService.addImageToSpot(spotId, file);
-        String returnMessage = spotImagesSpotId + " idli spota resim eklendi";
+        String returnMessage = "Spota basariyla resim eklendi";
         return ResponseEntity.status(OK).body(returnMessage);
     }
 

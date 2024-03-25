@@ -46,10 +46,14 @@ public class FileDataServiceImpl implements StorageService {
         if (!imageValidator.isFileSizeValid(multiPartFile)) {
             throw new ValidationException("Maximum file size reached : 10MB+");
         }
+
         String fileName = pathService.generateFileName(multiPartFile);
-        String filePath = FOLDER_PATH + fileName;
+        String basePath = System.getProperty("user.dir") + FOLDER_PATH;
+
         Long fileId = saveFileDataToDatabase(multiPartFile, fileName);
-        multiPartFile.transferTo(new File(filePath));
+
+        File file = new File(basePath, fileName);
+        multiPartFile.transferTo(file);
         return fileId;
     }
 
