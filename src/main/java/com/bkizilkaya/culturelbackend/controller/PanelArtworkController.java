@@ -81,12 +81,12 @@ public class PanelArtworkController {
     }
 
     @GetMapping("/{artworkId}/deleteImage/{fileId}")
-    public ResponseEntity<?> deleteImage(@PathVariable("artworkId") Long artworkId, @PathVariable("fileId") Long fileId) {
+    public String deleteImage(@PathVariable("artworkId") Long artworkId, @PathVariable("fileId") Long fileId) {
         try {
             artworkService.removeArtworkImageFromArtwork(artworkId, fileId);
-            return ResponseEntity.ok().body(true);
+            return "redirect:/artworks-list/showFormForUpdate/" + artworkId;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting image: " + e.getMessage());
+            return "error";
         }
     }
 
