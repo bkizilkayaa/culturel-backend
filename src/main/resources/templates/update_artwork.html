@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Artwork</title>
+</head>
+<body>
+<div class="container">
+    <h1>Artwork Management System</h1>
+    <hr>
+    <h2>Update Artwork</h2>
+
+    <form action="#" th:action="@{/artworks-list/saveArtwork}" th:object="${artwork}" method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}"/>
+
+        <input type="text" th:field="*{title}" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{description}" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{content}" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Update Artwork</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/artworks-list}"> Back to Artwork List</a>
+</div>
+</body>
+</html>

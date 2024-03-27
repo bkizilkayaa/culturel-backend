@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:p="http://www.w3.org/1999/html"
+<html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -27,14 +27,14 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #655b5b;
         }
     </style>
 </head>
 <body>
 
 <h2>Artworks List</h2>
-
+<a th:href="@{/artworks-list/showNewArtworkForm}" class="btn btn-primary btn-sm mb-3"> Add Artwork </a>
 <table>
     <thead>
     <tr>
@@ -49,7 +49,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="artwork : ${artwork}">
+    <tr th:each="artwork : ${listArtworks}">
         <td th:text="${artwork.id}">Artwork ID</td>
         <td th:text="${artwork.title}">Artwork Title</td>
         <td th:text="${artwork.description}">Artwork Description</td>
@@ -63,18 +63,42 @@
         <td th:text="${artwork.getModifiedDate()}">Artwork ModifiedDate</td>
         <td>
             <div th:each="fileData : ${artwork.fileData}">
-                <img th:src="${'/files/' + fileData.name}" alt="Artwork Image" height="80px" width="200px" />
+                <img th:src="${'/files/' + fileData.name}" alt="Artwork Image" height="80px" width="200px"/>
             </div>
         </td>
 
         <td>
-            <a>Edit</a>
-            <a>Delete</a>
+            <a th:href="@{/artworks-list/showFormForUpdate/{id}(id=${artwork.id})}" class="btn btn-primary">Update</a>
+            <a th:href="@{/artworks-list/deleteArtwork/{id}(id=${artwork.id})}" class="btn btn-primary">Delete</a>
         </td>
 
     </tr>
     </tbody>
 </table>
+
+<div th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Rows: [[${totalItems}]]
+        </div>
+        <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/artworks-list/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                    </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/artworks-list/page/' + ${currentPage + 1}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/artworks-list/page/' + ${totalPages}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </div>
+</div>
+</div>
 
 </body>
 </html>

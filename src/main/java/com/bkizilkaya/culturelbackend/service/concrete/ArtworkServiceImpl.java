@@ -9,6 +9,9 @@ import com.bkizilkaya.culturelbackend.model.FileData;
 import com.bkizilkaya.culturelbackend.repo.ArtworkRepository;
 import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -105,6 +108,12 @@ public class ArtworkServiceImpl implements ArtworkService {
 
             fileDataFromDb.setArtworkImages(null);
         }
+    }
+
+    @Override
+    public Page<ArtworkResponseDTO> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.artworkRepository.findAll(pageable).map(ArtworkMapper.INSTANCE::artworkToResponseDto);
     }
 
     protected Artwork getArtworkById(Long artworkId) {

@@ -2,6 +2,7 @@ package com.bkizilkaya.culturelbackend.service.abstraction;
 
 import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface ArtworkService {
     void deleteArtwork(Long id);
 
     void removeArtworkImageFromArtwork(Long artworkId, Long imageId);
+
+    Page<ArtworkResponseDTO> findPaginated(int pageNo, int pageSize);
 
 }
