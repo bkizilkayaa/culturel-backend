@@ -4,6 +4,8 @@ import com.bkizilkaya.culturelbackend.dto.artwork.request.ArtworkCreateDTO;
 import com.bkizilkaya.culturelbackend.dto.artwork.response.ArtworkResponseDTO;
 import com.bkizilkaya.culturelbackend.service.abstraction.ArtworkService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -74,5 +78,25 @@ public class PanelArtworkController {
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listArtworks", listOfArtworks);
         return "artworks";
+    }
+
+    @GetMapping("/{artworkId}/deleteImage/{fileId}")
+    public ResponseEntity<?> deleteImage(@PathVariable("artworkId") Long artworkId, @PathVariable("fileId") Long fileId) {
+        try {
+            artworkService.removeArtworkImageFromArtwork(artworkId, fileId);
+            return ResponseEntity.ok().body(true);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting image: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{artworkId}/addImage")
+    public ResponseEntity<?> addImage(@PathVariable("artworkId") Long artworkId, @RequestParam("image") MultipartFile file) {
+        try {
+            artworkService.addImageToArtwork(artworkId, file);
+            return ResponseEntity.ok().body(true);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating image: " + e.getMessage());
+        }
     }
 }
