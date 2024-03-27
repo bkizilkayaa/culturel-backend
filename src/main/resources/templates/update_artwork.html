@@ -13,7 +13,6 @@
 
     <form action="#" th:action="@{/artworks-list/saveArtwork}" th:object="${artwork}" method="POST">
 
-        <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}"/>
 
         <div class="form-group row">
@@ -37,17 +36,25 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="text-right">
+                    <button type="submit" class="btn btn-info col-2 mb-3">Update Artwork</button>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group row">
             <label for="content" class="col-sm-2 col-form-label">Files:</label>
             <div class="col-sm-10">
                 <div class="row">
-                    <!-- Existing images with delete button -->
+
                     <div th:each="fileData, index : ${artwork.fileData}" class="col-6 mb-4">
                         <img th:src="${'/files/' + fileData.name}" alt="Artwork Image" class="img-fluid"/>
                         <a class="btn btn-danger mt-2" onclick="deleteImage(this)"
                            th:href="@{'/artworks-list/' + ${artwork.id} + '/deleteImage/' + ${fileData.id}}">Sil</a>
                     </div>
-                    <!-- Button to add new image -->
+
                     <div class="col-6 mb-4">
                         <label for="newImage">Add New Image:</label>
                         <input type="file" id="newImage" name="newImage" class="form-control-file"/>
@@ -58,8 +65,6 @@
             </div>
         </div>
 
-
-        <button type="submit" class="btn btn-info col-2"> Update Artwork</button>
     </form>
 
     <hr>
